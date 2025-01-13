@@ -7,19 +7,21 @@ import ThemeContext from './ThemeContext';
 
 
 const App = () => {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState(false);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
-      <div className={`w-full h-screen flex justify-center ${theme === 'dark' ? 'bg-backgroundDark' : 'bg-backgroundLight'}`}>
-        <BrowserRouter>
-          <Routes>
-            <Route path='/' element={<HomePage />} />
-            <Route path='/Category' element={<CategoryPage />} />
-            <Route path='/Product' element={<ProductPage />} />
-          </Routes>
-        </BrowserRouter>
+      <div className={`${theme && "dark"}`}>
+        <div className={`w-full h-screen flex justify-center bg-backgroundLight dark:bg-backgroundDark duration-300`}>
+          <BrowserRouter>
+            <Routes>
+              <Route path='/' element={<HomePage />} />
+              <Route path='/Category' element={<CategoryPage />} />
+              <Route path='/Product' element={<ProductPage />} />
+            </Routes>
+          </BrowserRouter>
 
+        </div>
       </div>
     </ThemeContext.Provider >
   )
