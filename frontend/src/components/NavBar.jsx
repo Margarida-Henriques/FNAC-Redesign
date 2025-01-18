@@ -8,10 +8,11 @@ const NavBar = () => {
 
     const { theme, setTheme } = useContext(Context);
     const { sideBar, setSideBar } = useContext(Context);
+    // w-11/12 xl:w-10/12 2xl:w-9/12
 
     return (
         <header className='bg-backgroundDark px-4 py-3 flex justify-center text-white font-semibold text-lg shadow-lg'>
-            <div className='flex justify-between items-center gap-4  w-11/12 xl:w-10/12 2xl:w-9/12'>
+            <div className='flex justify-between w-11/12 xl:w-10/12 2xl:w-9/12'>
 
                 <div className='flex items-end gap-6'>
                     <img src={logoDark} alt='fnac_logo' className='w-28 hover:scale-105 transition-all duration-200 cursor-pointer' />
@@ -19,12 +20,12 @@ const NavBar = () => {
                         className='flex flex-row justify-center items-center gap-2 hover:text-primaryYellow active:text-primaryYellowMedium transition-all cursor-pointer'
                         onClick={() => setSideBar(!sideBar)}>
                         <FaBars className='text-2xl' />
-                        PRODUTOS
+                        <div>PRODUTOS</div>
                     </button>
                 </div>
 
-                <div className='relative flex flex-row justify-center items-center text-black gap-2 w-full'>
-                    <form action='' className='flex items-center w-6/12'>
+                <div className='relative flex flex-row justify-center items-center text-black gap-2 w-2/5'>
+                    <form action='' className='flex items-center w-full'>
                         <FaMagnifyingGlass className='absolute ml-3 z-20' />
                         <input
                             type="search"
