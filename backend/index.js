@@ -2,6 +2,7 @@ import express, { request, response } from "express";
 import mongoose from "mongoose";
 import { PORT, mongoDBURL } from "./config.js";
 import productsRoute from './routes/productsRoute.js';
+import categoryRoute from './routes/categoryRoute.js';
 import cors from 'cors';
 
 const app = express();
@@ -21,6 +22,8 @@ app.get('/', (request, response) => {
 });
 
 app.use('/products', productsRoute);
+
+app.use('/category', categoryRoute);
 
 
 mongoose

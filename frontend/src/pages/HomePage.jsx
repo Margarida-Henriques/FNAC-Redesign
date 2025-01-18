@@ -7,12 +7,11 @@ import { Link } from 'react-router-dom';
 import { Product } from '../../../backend/models/productModel';
 import logo from '../assets/logo.png'
 import logoDark from '../assets/logoDark.png'
-import ThemeContext from '../ThemeContext';
+import Context from '../Context';
 import { FaSun, FaMoon, FaBars, FaUser, FaCartShopping, FaMagnifyingGlass } from "react-icons/fa6";
-
+import SideBar from '../components/SideBar.jsx'
 
 const HomePage = () => {
-
 
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -21,7 +20,7 @@ const HomePage = () => {
         setLoading(true);
         axios.get('http://localhost:5555/products')
             .then((response) => {
-                setProducts(response.data.data);
+                setProducts(response.data);
                 setLoading(false);
             })
             .catch((error) => {
@@ -31,8 +30,9 @@ const HomePage = () => {
     }, [])
 
     return (
-        <div className='h-fit py-6 w-11/12 xl:w-10/12 2xl:w-9/12'>
+        <div className='h-fit w-full'>
             <NavBar />
+            <SideBar />
         </div>
     )
 }

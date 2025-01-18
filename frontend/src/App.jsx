@@ -3,14 +3,15 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import CategoryPage from './pages/CategoryPage';
 import ProductPage from './pages/ProductPage';
-import ThemeContext from './ThemeContext';
+import Context from './Context';
 
 
 const App = () => {
   const [theme, setTheme] = useState(false);
+  const [sideBar, setSideBar] = useState(false);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <Context.Provider value={{ theme, setTheme, sideBar, setSideBar }}>
       <div className={`${theme && "dark"}`}>
         <div className={`w-full h-screen flex justify-center bg-backgroundLight dark:bg-backgroundDark duration-300`}>
           <BrowserRouter>
@@ -23,7 +24,7 @@ const App = () => {
 
         </div>
       </div>
-    </ThemeContext.Provider >
+    </Context.Provider >
   )
 }
 

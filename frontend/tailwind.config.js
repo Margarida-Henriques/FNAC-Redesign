@@ -8,8 +8,8 @@ export default {
     extend: {
       colors: {
         primaryYellow: "#fcba03",
-        primaryYellowHover: "#df8f00",
-        primaryYellowActive: "#b96504",
+        primaryYellowMedium: "#df8f00",
+        primaryYellowDark: "#b96504",
 
         backgroundLight: "rgba(245, 245, 245)",
         backgroundDark: "rgba(18, 18, 18)"
