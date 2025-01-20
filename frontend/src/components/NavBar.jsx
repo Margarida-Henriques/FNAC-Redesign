@@ -20,7 +20,7 @@ const NavBar = () => {
                         className='flex flex-row justify-center items-center gap-2 hover:text-primaryYellow active:text-primaryYellowMedium transition-all cursor-pointer'
                         onClick={() => setSideBar(!sideBar)}>
                         <FaBars className='text-2xl' />
-                        <div>PRODUTOS</div>
+                        <div>PRODUCTS</div>
                     </button>
                 </div>
 
@@ -39,7 +39,7 @@ const NavBar = () => {
                         className=' hover:border-primaryYellowHover p-2 rounded-full bg-white hover:bg-primaryYellow active:text-primaryYellowMedium transition-all'
                         onClick={() => setTheme(!theme)}>
                         <FaSun className={`absolute text-lg text-black ${theme ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 ease-in-out`} />
-                        <FaMoon className={`text-lg text-black ${theme ? 'opacity-0' : 'opacity-100'} opacity-100 transition-opacity duration-300 ease-in-out`} />
+                        <FaMoon className={`text-lg text-black ${theme ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300 ease-in-out`} />
                     </button>
                 </div>
 
