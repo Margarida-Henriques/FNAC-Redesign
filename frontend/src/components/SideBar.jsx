@@ -2,13 +2,20 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 import axios from 'axios';
 import Context from '../Context';
 import logoDark from '../assets/logoDark.png'
-import { FaChevronRight, FaX } from "react-icons/fa6";
+import { FaChevronRight, FaX, FaComputer, FaLaptop } from "react-icons/fa6";
+
+
+const iconMap = {
+    Desktop: FaComputer,
+    Laptop: FaLaptop,
+};
 
 const SideBar = () => {
     const { sideBar, setSideBar } = useContext(Context);
     const [secondarySideBar, setSecondarySideBar] = useState(false);
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const [subcategories, setSubcategories] = useState([]);
 
 
     useEffect(() => {
@@ -30,6 +37,7 @@ const SideBar = () => {
                 setSelectedCategory(null);
             }, 450)
         } else {
+            setSubcategories(category.subcategories)
             setSelectedCategory(category);
             setSecondarySideBar(true);
         }
@@ -74,17 +82,26 @@ const SideBar = () => {
                 </div>
             </div>
 
-            <div className={`bg-white top-0 left-0 absolute h-full  z-30 shadow-lg transition-transform duration-500 ease-in-out ${!sideBar ? '-translate-x-full' : secondarySideBar ? 'translate-x-72' : '-translate-x-10'}`}>
-                <div className='flex w-80 justify-between items-center bg-primaryYellowMedium p-3 text-white font-semibold'>
+            <div className={`bg-white w-80 top-0 left-0 absolute h-full z-30 shadow-lg transition-transform duration-500 ease-in-out ${!sideBar ? '-translate-x-full' : secondarySideBar ? 'translate-x-72' : '-translate-x-10'}`}>
+                <div className='flex justify-between items-center bg-primaryYellowMedium p-3 text-white font-semibold'>
                     <div>{selectedCategory?.name}</div>
                     <button className="text-white"
                         onClick={() => (handleCloseSecondarySideBar())}>
                         <FaX className='text-sm' />
                     </button>
                 </div>
-                <div className="p-4">
-                    <p>{selectedCategory?.description || 'Sem descrição disponível.'}</p>
+
+                <div className='flex flex-wrap justify-between p-3 gap-2'>{subcategories.map((subcategorie, index) => {
+                    const Icon = iconMap[subcategorie];
+                    return (
+                        <button key={index} className='flex flex-col justify-center items-center border p-2 w-36 gap-2'>
+                            <div className=''>{subcategorie}</div>
+                            {Icon && <Icon className="text-6xl" />}
+                        </button>
+                    );
+                })}
                 </div>
+
             </div>
 
         </div >

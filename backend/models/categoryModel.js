@@ -6,6 +6,12 @@ const categorySchema = mongoose.Schema(
             required: true,
             trim: true,
         },
+        subcategories: [
+            {
+                type: String,
+                trim: true,
+            },
+        ],
 
     },
     { timestamps: true }
