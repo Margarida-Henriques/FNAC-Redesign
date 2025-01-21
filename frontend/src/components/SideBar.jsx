@@ -35,7 +35,7 @@ const SideBar = () => {
         }
     };
 
-    const handleCloseSecondarySideBar = (category) => {
+    const handleCloseBoth = () => {
         setSecondarySideBar(false);
         setSideBar(false);
         setTimeout(() => {
@@ -43,13 +43,19 @@ const SideBar = () => {
         }, 450)
     }
 
+    const handleCloseSecondarySideBar = () => {
+        setSecondarySideBar(false);
+        setTimeout(() => {
+            setSelectedCategory(null);
+        }, 450)
+    }
+
     return (
         <div className={``}>
-            {sideBar &&
-                <div className="fixed w-screen inset-0 bg-black bg-opacity-50 z-20 cursor-pointer transform-none"
-                    onClick={() => (handleCloseSecondarySideBar())}>
-                </div>
-            }
+            <div className={`fixed w-screen inset-0 bg-black bg-opacity-50 z-20 cursor-pointer transform-none duration-500 ${sideBar ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+                onClick={() => (handleCloseBoth())}>
+            </div>
+
             <div className={`flex h-full absolute bg-white shadow-lg top-0 left-0 z-50 transition-transform duration-500 ease-in-out ${sideBar ? 'transform-none' : '-translate-x-full'}`}>
                 <div className='w-72'>
                     <div className='flex justify-between items-center bg-backgroundDark p-3 text-white font-semibold'>
@@ -68,18 +74,16 @@ const SideBar = () => {
                 </div>
             </div>
 
-            <div className={`bg-white top-0 left-0 absolute h-full  z-30 shadow-lg transition-transform duration-500 ease-in-out ${!sideBar ? '-translate-x-full' : secondarySideBar ? 'translate-x-72' : '-translate-x-0'}`}>
-                <div className='flex w-72 justify-between items-center bg-primaryYellowMedium p-3 text-white font-semibold'>
+            <div className={`bg-white top-0 left-0 absolute h-full  z-30 shadow-lg transition-transform duration-500 ease-in-out ${!sideBar ? '-translate-x-full' : secondarySideBar ? 'translate-x-72' : '-translate-x-10'}`}>
+                <div className='flex w-80 justify-between items-center bg-primaryYellowMedium p-3 text-white font-semibold'>
                     <div>{selectedCategory?.name}</div>
                     <button className="text-white"
-                        onClick={() => setSecondarySideBar(false)}>
+                        onClick={() => (handleCloseSecondarySideBar())}>
                         <FaX className='text-sm' />
                     </button>
                 </div>
                 <div className="p-4">
-                    {/* Informações específicas da categoria */}
                     <p>{selectedCategory?.description || 'Sem descrição disponível.'}</p>
-                    {/* Adicione mais detalhes aqui conforme necessário */}
                 </div>
             </div>
 
