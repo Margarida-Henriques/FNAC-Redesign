@@ -69,7 +69,7 @@ const NavBar = () => {
                     id='search'
                     placeholder='Search...'
                     autoComplete='off'
-                    className='relative z-10 text-base bg-white w-full p-1.5 rounded-full pl-9 focus:outline-none focus:ring-0 ' />
+                    className='relative z-10 text-base bg-white text-black w-full p-1.5 rounded-full pl-9 focus:outline-none focus:ring-0 ' />
             </form>
 
         </header>

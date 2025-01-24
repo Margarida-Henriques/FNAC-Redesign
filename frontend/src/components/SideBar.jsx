@@ -2,12 +2,13 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 import axios from 'axios';
 import Context from '../Context';
 import logoDark from '../assets/logoDark.png'
-import { FaChevronRight, FaX, FaComputer, FaLaptop } from "react-icons/fa6";
+import { FaChevronRight, FaX, FaComputer, FaLaptop, FaComputerMouse } from "react-icons/fa6";
 
 
 const iconMap = {
     Desktop: FaComputer,
     Laptop: FaLaptop,
+    Mouse: FaComputerMouse
 };
 
 const SideBar = () => {
@@ -64,11 +65,12 @@ const SideBar = () => {
                 onClick={() => (handleCloseBoth())}>
             </div>
 
-            <div className={`flex h-full absolute bg-white shadow-lg top-0 left-0 z-50 transition-transform duration-500 ease-in-out ${sideBar ? 'transform-none' : '-translate-x-full'}`}>
-                <div className='w-72'>
+            <div className={`flex h-full absolute bg-white shadow-lg top-0 left-0 z-40 transition-transform duration-500 ease-in-out ${sideBar ? 'transform-none' : '-translate-x-full'}`}>
+                <div className='md:w-72 w-screen'>
                     <div className='flex justify-between items-center bg-backgroundDark p-3 text-white font-semibold'>
                         <div>PRODUTOS</div>
-                        <img src={logoDark} alt='fnac_logo' className='w-12' />
+                        <FaX className='md:hidden text-sm' onClick={() => { setSideBar() }} />
+                        <img src={logoDark} alt='fnac_logo' className='w-12 hidden md:block' />
                     </div>
 
                     {categories.map((category) => (
@@ -82,7 +84,7 @@ const SideBar = () => {
                 </div>
             </div>
 
-            <div className={`bg-white w-80 top-0 left-0 absolute h-full z-30 shadow-lg transition-transform duration-500 ease-in-out ${!sideBar ? '-translate-x-full' : secondarySideBar ? 'translate-x-72' : '-translate-x-10'}`}>
+            <div className={`bg-white w-screen md:w-80 top-0 left-0 absolute h-full z-50 md:z-30 shadow-lg transition-transform duration-500 ease-in-out ${!sideBar ? '-translate-x-full hidden md:block' : secondarySideBar ? 'md:translate-x-72 ' : 'md:-translate-x-10 translate-x-full'}`}>
                 <div className='flex justify-between items-center bg-primaryYellowMedium p-3 text-white font-semibold'>
                     <div>{selectedCategory?.name}</div>
                     <button className="text-white"
@@ -91,12 +93,12 @@ const SideBar = () => {
                     </button>
                 </div>
 
-                <div className='flex flex-wrap justify-between p-3 gap-2'>{subcategories.map((subcategorie, index) => {
+                <div className='grid grid-cols-2 gap-4 p-3'>{subcategories.map((subcategorie, index) => {
                     const Icon = iconMap[subcategorie];
                     return (
-                        <button key={index} className='flex flex-col justify-center items-center border p-2 w-36 gap-2'>
-                            <div className=''>{subcategorie}</div>
+                        <button key={index} className='flex flex-col justify-center items-center border p-2 gap-2 w-full rounded shadow-md hover:scale-105 transition-all duration-200'>
                             {Icon && <Icon className="text-6xl" />}
+                            <div className=''>{subcategorie}</div>
                         </button>
                     );
                 })}
