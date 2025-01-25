@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 import axios from 'axios';
 import Context from '../Context';
 import logoDark from '../assets/logoDark.png'
-import { FaChevronRight, FaX, FaComputer, FaLaptop, FaComputerMouse } from "react-icons/fa6";
+import { FaChevronRight, FaX, FaComputer, FaLaptop, FaComputerMouse, FaChevronLeft } from "react-icons/fa6";
 
 
 const iconMap = {
@@ -30,13 +30,14 @@ const SideBar = () => {
 
     }, [])
 
+    const handleCloseBoth = () => {
+        setSecondarySideBar(false);
+        setSideBar(false);
+    }
 
     const handleCategoryClick = (category) => {
-        if (category == selectedCategory) {
+        if (category == selectedCategory && secondarySideBar) {
             setSecondarySideBar(false);
-            setTimeout(() => {
-                setSelectedCategory(null);
-            }, 450)
         } else {
             setSubcategories(category.subcategories)
             setSelectedCategory(category);
@@ -44,66 +45,63 @@ const SideBar = () => {
         }
     };
 
-    const handleCloseBoth = () => {
-        setSecondarySideBar(false);
-        setSideBar(false);
-        setTimeout(() => {
-            setSelectedCategory(null);
-        }, 450)
-    }
-
-    const handleCloseSecondarySideBar = () => {
-        setSecondarySideBar(false);
-        setTimeout(() => {
-            setSelectedCategory(null);
-        }, 450)
-    }
 
     return (
         <div className={``}>
-            <div className={`fixed w-screen inset-0 bg-black bg-opacity-50 z-20 cursor-pointer transform-none duration-500 ${sideBar ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+
+            {/* Black background */}
+            <div className={`fixed inset-0 bg-black bg-opacity-50 z-20 cursor-pointer transform-none duration-500 
+                ${sideBar ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
                 onClick={() => (handleCloseBoth())}>
             </div>
 
-            <div className={`flex h-full absolute bg-white shadow-lg top-0 left-0 z-40 transition-transform duration-500 ease-in-out ${sideBar ? 'transform-none' : '-translate-x-full'}`}>
+            {/* SideBar */}
+            <div className={`flex h-full fixed overflow-y-auto bg-white shadow-lg top-0 left-0 z-40 transition-transform duration-500 ease-in-out 
+                ${sideBar ? 'md:transform-none' : '-translate-x-full'} ${secondarySideBar ? '-translate-x-full' : ''}`}>
+
                 <div className='md:w-72 w-screen'>
-                    <div className='flex justify-between items-center bg-backgroundDark p-3 text-white font-semibold'>
+                    <div className='fixed md:w-72 w-screen flex justify-between items-center bg-backgroundDark p-3 text-white font-semibold'>
                         <div>PRODUTOS</div>
                         <FaX className='md:hidden text-sm' onClick={() => { setSideBar() }} />
                         <img src={logoDark} alt='fnac_logo' className='w-12 hidden md:block' />
                     </div>
 
-                    {categories.map((category) => (
-                        <div className='flex justify-between items-center py-2 px-3 cursor-pointer border-b hover:bg-slate-50 transition-colors duration-100'
-                            key={category._id}
-                            onClick={() => { handleCategoryClick(category) }}>
-                            {category.name}
-                            <FaChevronRight className='text-stone-300' />
-                        </div>
-                    ))}
+                    <div className='mt-12'>
+                        {categories.map((category) => (
+                            <div className='flex justify-between items-center py-2.5 px-3 cursor-pointer border-b hover:bg-slate-50 transition-colors duration-100'
+                                key={category._id}
+                                onClick={() => { handleCategoryClick(category) }}>
+                                {category.name}
+                                <FaChevronRight className='text-stone-300' />
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
 
-            <div className={`bg-white w-screen md:w-80 top-0 left-0 absolute h-full z-50 md:z-30 shadow-lg transition-transform duration-500 ease-in-out ${!sideBar ? '-translate-x-full hidden md:block' : secondarySideBar ? 'md:translate-x-72 ' : 'md:-translate-x-10 translate-x-full'}`}>
-                <div className='flex justify-between items-center bg-primaryYellowMedium p-3 text-white font-semibold'>
+            {/* SecondSideBar */}
+            <div className={`flex flex-col fixed h-full w-screen overflow-auto bg-white  md:w-72 top-0 left-0 z-50 md:z-30 shadow-lg transition-transform duration-500 ease-in-out 
+                ${!sideBar ? 'md:flex hidden -translate-x-full' : secondarySideBar ? 'md:translate-x-72 ' : 'md:-translate-x-0 translate-x-full'}`}>
+
+                <div className='flex items-center gap-1 bg-primaryYellowMedium p-3 text-white font-semibold cursor-pointer'
+                    onClick={() => (setSecondarySideBar(false))}>
+                    <FaChevronLeft className='text-sm text-white' />
                     <div>{selectedCategory?.name}</div>
-                    <button className="text-white"
-                        onClick={() => (handleCloseSecondarySideBar())}>
-                        <FaX className='text-sm' />
-                    </button>
                 </div>
 
-                <div className='grid grid-cols-2 gap-4 p-3'>{subcategories.map((subcategorie, index) => {
-                    const Icon = iconMap[subcategorie];
-                    return (
-                        <button key={index} className='flex flex-col justify-center items-center border p-2 gap-2 w-full rounded shadow-md hover:scale-105 transition-all duration-200'>
-                            {Icon && <Icon className="text-6xl" />}
-                            <div className=''>{subcategorie}</div>
-                        </button>
-                    );
-                })}
+                <div className='flex flex-col justify-between h-full'>
+                    <div className='grid grid-cols-2 gap-4 p-4'>{subcategories.map((subcategorie, index) => {
+                        const Icon = iconMap[subcategorie];
+                        return (
+                            <button key={index} className='flex flex-col justify-center items-center border gap-2 w-full aspect-square rounded-full shadow-md hover:scale-105 transition-all duration-200'>
+                                {Icon && <Icon className="text-6xl" />}
+                                <div className=''>{subcategorie}</div>
+                            </button>
+                        );
+                    })}
+                    </div>
+                    <div className='bg-primaryYellowMedium p-4'>Publicidade</div>
                 </div>
-
             </div>
 
         </div >
