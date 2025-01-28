@@ -69,7 +69,7 @@ const SideBar = () => {
 
                     <div className='mt-12'>
                         {categories.map((category) => (
-                            <div className='flex justify-between items-center py-2.5 px-3 cursor-pointer border-b hover:bg-slate-50 transition-colors duration-100'
+                            <div className='flex justify-between items-center py-2.5 px-3 cursor-pointer border-b hover:bg-slate-100 transition-colors duration-100'
                                 key={category._id}
                                 onClick={() => { handleCategoryClick(category) }}>
                                 {category.name}
@@ -94,7 +94,7 @@ const SideBar = () => {
                     <div className='grid grid-cols-2 gap-4 p-4'>{subcategories.map((subcategorie, index) => {
                         const Icon = iconMap[subcategorie];
                         return (
-                            <button key={index} className='flex flex-col justify-center items-center border gap-2 w-full aspect-square rounded-full hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.1)] transition-all duration-300'>
+                            <button key={index} className='flex flex-col justify-center items-center border gap-2 w-full aspect-square rounded-full hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.2)] transition-all duration-300'>
                                 {Icon && <Icon className="text-6xl" />}
                                 <div className=''>{subcategorie}</div>
                             </button>
