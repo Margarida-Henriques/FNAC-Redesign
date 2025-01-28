@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import axios from 'axios';
 import Context from '../Context';
+import discount from '../assets/discountSidebar.jpeg'
 import logoDark from '../assets/logoDark.png'
 import { FaChevronRight, FaX, FaComputer, FaLaptop, FaComputerMouse, FaChevronLeft } from "react-icons/fa6";
 
@@ -61,7 +62,7 @@ const SideBar = () => {
 
                 <div className='md:w-72 w-screen'>
                     <div className='fixed md:w-72 w-screen flex justify-between items-center shadow-md bg-backgroundDark p-3 text-white font-semibold'>
-                        <div>PRODUTOS</div>
+                        <div>PRODUCTS</div>
                         <FaX className='md:hidden text-sm' onClick={() => { setSideBar() }} />
                         <img src={logoDark} alt='fnac_logo' className='w-12 hidden md:block' />
                     </div>
@@ -93,14 +94,14 @@ const SideBar = () => {
                     <div className='grid grid-cols-2 gap-4 p-4'>{subcategories.map((subcategorie, index) => {
                         const Icon = iconMap[subcategorie];
                         return (
-                            <button key={index} className='flex flex-col justify-center items-center border gap-2 w-full aspect-square rounded-full shadow-md hover:scale-105 transition-all duration-200'>
+                            <button key={index} className='flex flex-col justify-center items-center border gap-2 w-full aspect-square rounded-full hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.1)] transition-all duration-300'>
                                 {Icon && <Icon className="text-6xl" />}
                                 <div className=''>{subcategorie}</div>
                             </button>
                         );
                     })}
                     </div>
-                    <div className='bg-primaryYellowMedium p-4'>Publicidade</div>
+                    <img src={discount} className='p-2'></img>
                 </div>
             </div>
 

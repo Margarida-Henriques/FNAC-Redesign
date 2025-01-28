@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Context from '../Context';
-import logo from '../assets/logo.png'
+import lego from '../assets/lego.png'
+import fnacRestart from '../assets/fnacRestart.png'
+import NTF from '../assets/NTF.png'
 import logoDark from '../assets/logoDark.png'
-import { FaSun, FaMoon, FaBars, FaUser, FaCartShopping, FaMagnifyingGlass } from "react-icons/fa6";
+import { FaSun, FaMoon, FaBars, FaUser, FaCartShopping, FaMagnifyingGlass, FaBullhorn, FaPuzzlePiece } from "react-icons/fa6";
 
 const NavBar = () => {
 
@@ -107,11 +109,28 @@ const NavBar = () => {
                             autoComplete='off'
                             className='relative z-10 text-base bg-white text-black w-full p-1.5 rounded-full pl-9 focus:outline-none focus:ring-0 ' />
                     </form>
-                    <div className='grid grid-cols-4 w-full justify-between'>
-                        <div className='w-full text-center'>Scroll</div>
-                        <div className='w-full text-center'>Scroll</div>
-                        <div className='w-full text-center'>Scroll</div>
-                        <div className='w-full text-center'>Scroll</div>
+                    <div className='grid grid-cols-5 w-full text-xs text-white justify-between'>
+
+                        <div className='flex justify-center p-1 items-center gap-2 w-full h-full cursor-pointer hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.4)] transition-all duration-300'>
+                            <FaBullhorn className='text-lg' />
+                            POWER DEALS
+                        </div>
+                        <div className='flex justify-center p-1 items-center gap-2 w-full h-full cursor-pointer hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.4)] transition-all duration-300'>
+                            <FaPuzzlePiece className='text-lg' />
+                            DIA MUNDIAL DO PUZZLE
+                        </div>
+                        <div className='flex justify-center p-1 items-center gap-2 w-full h-full cursor-pointer hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.4)] transition-all duration-300'>
+                            <img className='w-6' src={lego}></img>
+                            LEGO DAY
+                        </div>
+                        <div className='flex justify-center p-1 items-center gap-2 w-full h-full cursor-pointer hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.4)] transition-all duration-300'>
+                            <img className='w-7' src={fnacRestart}></img>
+                            RETOMAS FNAC
+                        </div>
+                        <div className='flex justify-center p-1 items-center gap-2 w-full h-full cursor-pointer hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.4)] transition-all duration-300'>
+                            <img className='w-6' src={NTF}></img>
+                            NOVOS TALENTOS FNAC
+                        </div>
                     </div>
                 </div>
             </div>
