@@ -13,7 +13,7 @@ const App = () => {
   return (
     <Context.Provider value={{ theme, setTheme, sideBar, setSideBar }}>
       <div className={`${theme && "dark"}`}>
-        <div className={`w-full h-screen bg-backgroundLight dark:bg-backgroundDark duration-300`}>
+        <div className={`w-full h-full bg-backgroundLight dark:bg-backgroundDark duration-300`}>
           <BrowserRouter>
             <Routes>
               <Route path='/' element={<HomePage />} />

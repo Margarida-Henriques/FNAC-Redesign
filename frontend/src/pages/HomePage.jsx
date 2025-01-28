@@ -33,7 +33,7 @@ const HomePage = () => {
         <div className='h-fit w-full'>
             <NavBar />
             <SideBar />
-            <button className='bg-pink-500 active:bg-blue-400'>hsssssssssssssssssssssssssssssssi</button>
+            <button className=' active:bg-blue-400 h-[1000px]'>hsssssssssssssssssssssssssssssssi</button>
         </div>
     )
 }
