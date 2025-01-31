@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import NavBar from '../components/NavBar';
+import SideBar from '../components/SideBar.jsx'
+
 import Spinner from '../components/Spinner';
 import { Link } from 'react-router-dom';
 
@@ -23,19 +26,18 @@ const CategoryPage = () => {
 
 
     return (
-        <div className='p-4'>
-            <div className='flex flex-col justify-between'>
-                <h1 className='text-3xl my-8'>Products</h1>
-                {loading ? (
-                    <Spinner />
-                ) : (
-                    <ul>
+        <div className=''>
+            <NavBar />
+            <SideBar />
+            <div className='flex justify-center'>
+                <div className='grid grid-cols-5 gap-3 mt-28 w-full sm:w-11/12 xl:w-10/12 2xl:w-9/12'>
+                    <h1 className='h-full text-3xl bg-white'>Products</h1>
+                    <ul className='h-full bg-white col-span-4'>
                         {products.map((product, index) => (
                             <li key={product._id}>{product.name}</li>
                         ))}
                     </ul>
-                )}
-
+                </div>
             </div>
         </div>
     )

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Context from '../Context';
+import { Link } from 'react-router-dom';
 import lego from '../assets/lego.png'
 import fnacRestart from '../assets/fnacRestart.png'
 import NTF from '../assets/NTF.png'
@@ -42,11 +43,11 @@ const NavBar = () => {
     return (
         <header className=''>
             {/* PrimaryNav */}
-            <div className='fixed w-full h-14 md:h-16 flex justify-center items-center flex-col gap-4 bg-backgroundDark text-white font-semibold text-lg shadow-lg z-30'>
+            <div className='fixed w-full h-14 md:h-16 flex justify-center items-center flex-col gap-4 bg-backgroundDark text-white font-semibold text-lg shadow-lg z-20'>
                 <div className='flex justify-between w-11/12 xl:w-10/12 2xl:w-9/12'>
 
                     <div className='flex items-center gap-6'>
-                        <img src={logoDark} alt='fnac_logo' className='hidden md:block w-24 hover:scale-105 transition-all duration-200 cursor-pointer' />
+                        <Link to={"/"}><img src={logoDark} alt='fnac_logo' className='hidden md:block w-24 hover:scale-105 transition-all duration-200 cursor-pointer' /></Link>
                         <button
                             className='flex flex-row justify-center items-center gap-2 hover:text-primaryYellow active:text-primaryYellowMedium transition-all cursor-pointer'
                             onClick={() => setSideBar(!sideBar)}>
@@ -109,7 +110,7 @@ const NavBar = () => {
                             autoComplete='off'
                             className='relative z-10 text-base bg-white text-black w-full p-1.5 rounded-full pl-9 focus:outline-none focus:ring-0 ' />
                     </form>
-                    <div className='grid grid-cols-5 w-full text-xs text-white justify-between'>
+                    <div className='hidden md:grid lg:grid-cols-5 grid-cols-4 w-full text-xs text-white justify-between'>
 
                         <div className='flex justify-center p-1 items-center gap-2 w-full h-full cursor-pointer hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.4)] transition-all duration-300'>
                             <FaBullhorn className='text-lg' />
@@ -127,7 +128,7 @@ const NavBar = () => {
                             <img className='w-7' src={fnacRestart}></img>
                             RETOMAS FNAC
                         </div>
-                        <div className='flex justify-center p-1 items-center gap-2 w-full h-full cursor-pointer hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.4)] transition-all duration-300'>
+                        <div className='hidden lg:flex justify-center p-1 items-center gap-2 w-full h-full cursor-pointer hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.4)] transition-all duration-300'>
                             <img className='w-6' src={NTF}></img>
                             NOVOS TALENTOS FNAC
                         </div>

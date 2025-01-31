@@ -9,11 +9,12 @@ import Context from './Context';
 const App = () => {
   const [theme, setTheme] = useState(false);
   const [sideBar, setSideBar] = useState(false);
+  const [productSearch, setProductSearch] = useState();
 
   return (
-    <Context.Provider value={{ theme, setTheme, sideBar, setSideBar }}>
+    <Context.Provider value={{ theme, setTheme, sideBar, setSideBar, productSearch, setProductSearch }}>
       <div className={`${theme && "dark"}`}>
-        <div className={`w-full h-full bg-backgroundLight dark:bg-backgroundDark duration-300`}>
+        <div className={`min-h-screen bg-backgroundLight dark:bg-backgroundDark duration-300`}>
           <BrowserRouter>
             <Routes>
               <Route path='/' element={<HomePage />} />

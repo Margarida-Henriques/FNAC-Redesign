@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import Context from '../Context';
 import discount from '../assets/discountSidebar.jpeg'
 import logoDark from '../assets/logoDark.png'
@@ -13,6 +14,8 @@ const iconMap = {
 };
 
 const SideBar = () => {
+    const navigate = useNavigate();
+
     const { sideBar, setSideBar } = useContext(Context);
     const [secondarySideBar, setSecondarySideBar] = useState(false);
     const [categories, setCategories] = useState([]);
@@ -46,6 +49,11 @@ const SideBar = () => {
         }
     };
 
+    const searchCategoryClick = (category) => {
+        navigate("/Category");
+        handleCloseBoth();
+    }
+
 
     return (
         <div className={``}>
@@ -63,7 +71,7 @@ const SideBar = () => {
                 <div className='md:w-72 w-screen'>
                     <div className='fixed md:w-72 w-screen flex justify-between items-center shadow-md bg-backgroundDark p-3 text-white font-semibold'>
                         <div>PRODUCTS</div>
-                        <FaX className='md:hidden text-sm' onClick={() => { setSideBar() }} />
+                        <FaX className='md:hidden text-sm' onClick={() => { setSideBar(false) }} />
                         <img src={logoDark} alt='fnac_logo' className='w-12 hidden md:block' />
                     </div>
 
@@ -91,15 +99,17 @@ const SideBar = () => {
                 </div>
 
                 <div className='flex flex-col justify-between h-full'>
-                    <div className='grid grid-cols-2 gap-4 p-4'>{subcategories.map((subcategorie, index) => {
-                        const Icon = iconMap[subcategorie];
-                        return (
-                            <button key={index} className='flex flex-col justify-center items-center border gap-2 w-full aspect-square rounded-full hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.2)] transition-all duration-300'>
-                                {Icon && <Icon className="text-6xl" />}
-                                <div className=''>{subcategorie}</div>
-                            </button>
-                        );
-                    })}
+                    <div className='grid grid-cols-2 gap-4 p-4'>
+                        {subcategories.map((subcategorie, index) => {
+                            const Icon = iconMap[subcategorie];
+                            return (
+                                <button key={index} className='flex flex-col justify-center items-center border gap-2 w-full aspect-square rounded-full hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.2)] transition-all duration-300'
+                                    onClick={() => (searchCategoryClick(subcategorie))}>
+                                    {Icon && <Icon className="text-6xl" />}
+                                    <div className=''>{subcategorie}</div>
+                                </button>
+                            );
+                        })}
                     </div>
                     <img src={discount} className='p-2'></img>
                 </div>

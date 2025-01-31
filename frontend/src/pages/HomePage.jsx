@@ -1,18 +1,16 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import NavBar from '../components/NavBar';
+import SideBar from '../components/SideBar.jsx'
 
 import Spinner from '../components/Spinner';
-import { Link } from 'react-router-dom';
-import { Product } from '../../../backend/models/productModel';
-import logo from '../assets/logo.png'
-import logoDark from '../assets/logoDark.png'
 import Context from '../Context';
-import { FaSun, FaMoon, FaBars, FaUser, FaCartShopping, FaMagnifyingGlass, FaAngleRight, FaAngleLeft } from "react-icons/fa6";
-import SideBar from '../components/SideBar.jsx'
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
+
 
 import promoSamsungAI from '../assets/promoSamsungAI.jpeg'
 import promoPowerDeals from '../assets/promoPowerDeals.jpeg'
+import promoFlashSales from '../assets/promoFlashSales.jpeg'
 
 const HomePage = () => {
 
@@ -34,13 +32,27 @@ const HomePage = () => {
 
 
     //SlideShow
-    const slides = [promoSamsungAI, promoPowerDeals];
+    const slides = [
+        {
+            img: promoSamsungAI,
+            color: "#080404",
+        },
+        {
+            img: promoPowerDeals,
+            color: "#e81c2c",
+        },
+        {
+            img: promoFlashSales,
+            color: "#e00c64",
+        }
+    ];
+
     const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
         const interval = setInterval(() => {
             nextSlide();
-        }, 3000);
+        }, 5000);
         return () => clearInterval(interval);
     }, [currentIndex]);
 
@@ -53,18 +65,18 @@ const HomePage = () => {
     };
 
     return (
-        <div className='h-fit w-full'>
+        <div className=''>
             <NavBar />
             <SideBar />
             <div className='flex justify-center'>
-                <div className='grid grid-cols-2 grid-rows-[auto] gap-4 mt-32 w-11/12 xl:w-10/12 2xl:w-9/12'>
+                <div className='grid grid-cols-2 grid-rows-[auto] gap-4 mt-28 w-full sm:w-11/12 xl:w-10/12 2xl:w-9/12'>
 
-                    <div className="relative overflow-hidden col-span-2 bg-black w-full h-64">
-                        <div className={`flex w-full h-full transition-transform duration-500 ease-in-out transform 
-                            ${currentIndex === 0 ? "translate-x-0" : "-translate-x-full"}`}>
+                    {/* SlideShow */}
+                    <div className={`relative overflow-hidden col-span-2 w-full transition-colors duration-500`} style={{ backgroundColor: slides[currentIndex].color }}>
+                        <div className={`flex w-full h-full transition-transform duration-500 ease-in-out transform `} style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
                             {slides.map((slide, index) => (
                                 <div key={index} className="flex justify-center w-full m-auto flex-shrink-0">
-                                    <img src={slide} alt="Promo" />
+                                    <img src={slide.img} alt="Promo" />
                                 </div>
                             ))}
                         </div>
