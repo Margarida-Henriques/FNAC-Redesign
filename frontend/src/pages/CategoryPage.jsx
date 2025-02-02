@@ -1,28 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import NavBar from '../components/NavBar';
 import SideBar from '../components/SideBar.jsx'
-
-import Spinner from '../components/Spinner';
-import { Link } from 'react-router-dom';
+import Context from '../Context';
 
 const CategoryPage = () => {
-
     const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const { categorySearched, setCategorySearched } = useContext(Context);
 
     useEffect(() => {
-        setLoading(true);
-        axios.get('http://localhost:5555/products')
+
+        axios.get('http://localhost:5555/products?', { params: { subcategory: categorySearched } })
             .then((response) => {
                 setProducts(response.data);
-                setLoading(false);
             })
             .catch((error) => {
                 console.error('Error fetching products:', error);
-                setLoading(false);
             });
-    }, []);
+    }, [categorySearched]);
 
 
     return (

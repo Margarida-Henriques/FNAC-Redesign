@@ -1,10 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import NavBar from '../components/NavBar';
 import SideBar from '../components/SideBar.jsx'
-
-import Spinner from '../components/Spinner';
-import Context from '../Context';
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
 
 
@@ -13,22 +10,6 @@ import promoPowerDeals from '../assets/promoPowerDeals.jpeg'
 import promoFlashSales from '../assets/promoFlashSales.jpeg'
 
 const HomePage = () => {
-
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        setLoading(true);
-        axios.get('http://localhost:5555/products')
-            .then((response) => {
-                setProducts(response.data);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-
-    }, [])
 
 
     //SlideShow

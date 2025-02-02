@@ -31,12 +31,31 @@ router.post('/', async (request, response) => {
     }
 });
 
+// //GET PRODUCTS
+// router.get('/', async (request, response) => {
+//     try {
+//         const products = await Product.find({});
+//         console.log(products);
+//         return response.status(200).json(products);
+
+
+//     } catch (error) {
+//         console.log(error.message);
+//         response.status(500).send({ message: error.message });
+//     }
+// });
+
 //GET PRODUCTS
 router.get('/', async (request, response) => {
     try {
-        const products = await Product.find({});
+        const { subcategory } = request.query;
+        let query = {};
 
-        return response.status(200).json(products)
+        if (subcategory) {
+            query.type = subcategory; // Filter by subcategory if provided
+        }
+        const products = await Product.find(query); // If query is empty, fetch all products
+        return response.status(200).json(products);
 
     } catch (error) {
         console.log(error.message);
