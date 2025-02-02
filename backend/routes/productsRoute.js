@@ -1,5 +1,6 @@
 import express from 'express';
 import { Product } from "../models/productModel.js";
+import { Category } from "../models/categoryModel.js";
 
 const router = express.Router();
 
@@ -31,30 +32,19 @@ router.post('/', async (request, response) => {
     }
 });
 
-// //GET PRODUCTS
-// router.get('/', async (request, response) => {
-//     try {
-//         const products = await Product.find({});
-//         console.log(products);
-//         return response.status(200).json(products);
-
-
-//     } catch (error) {
-//         console.log(error.message);
-//         response.status(500).send({ message: error.message });
-//     }
-// });
-
 //GET PRODUCTS
 router.get('/', async (request, response) => {
     try {
         const { subcategory } = request.query;
+        console.log(request.query)
         let query = {};
 
         if (subcategory) {
-            query.type = subcategory; // Filter by subcategory if provided
+            query.type = subcategory;
         }
-        const products = await Product.find(query); // If query is empty, fetch all products
+
+        const products = await Product.find(query);
+        console.log(products)
         return response.status(200).json(products);
 
     } catch (error) {
