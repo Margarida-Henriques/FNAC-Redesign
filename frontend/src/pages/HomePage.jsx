@@ -11,7 +11,6 @@ import promoFlashSales from '../assets/promoFlashSales.jpeg'
 
 const HomePage = () => {
 
-
     //SlideShow
     const slides = [
         {

@@ -44,7 +44,6 @@ router.get('/', async (request, response) => {
         }
 
         const products = await Product.find(query);
-        console.log(products)
         return response.status(200).json(products);
 
     } catch (error) {

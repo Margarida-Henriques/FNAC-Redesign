@@ -68,7 +68,7 @@ const SideBar = () => {
             </div>
 
             {/* SideBar */}
-            <div className={`flex h-full fixed overflow-y-auto bg-white shadow-lg top-0 left-0 z-40 transition-transform duration-500 ease-in-out 
+            <div className={`flex h-full fixed overflow-y-auto bg-white shadow-lg top-0 left-0 z-40 transition-transform duration-500 ease-in-out dark:bg-backgroundDark dark:text-white 
                 ${sideBar ? 'md:transform-none' : '-translate-x-full'} ${secondarySideBar ? '-translate-x-full' : ''}`}>
 
                 <div className='md:w-72 w-screen'>
@@ -80,7 +80,7 @@ const SideBar = () => {
 
                     <div className='mt-12'>
                         {categories.map((category) => (
-                            <div className='flex justify-between items-center py-2.5 px-3 cursor-pointer border-b hover:bg-slate-100 transition-colors duration-100'
+                            <div className='flex justify-between items-center py-2.5 px-3 cursor-pointer border-b hover:bg-slate-100 dark:border-stone-700 dark:hover:bg-black transition-colors duration-100'
                                 key={category._id}
                                 onClick={() => { handleCategoryClick(category) }}>
                                 {category.name}
@@ -92,7 +92,7 @@ const SideBar = () => {
             </div>
 
             {/* SecondSideBar */}
-            <div className={`flex flex-col fixed h-full w-screen overflow-auto bg-white  md:w-72 top-0 left-0 z-50 md:z-30 shadow-lg transition-transform duration-500 ease-in-out 
+            <div className={`flex flex-col fixed h-full w-screen overflow-auto bg-white dark:text-white dark:bg-backgroundDark md:w-72 top-0 left-0 z-50 md:z-30 shadow-lg transition-transform duration-500 ease-in-out 
                 ${!sideBar ? 'md:flex hidden -translate-x-full' : secondarySideBar ? 'md:translate-x-72 ' : 'md:-translate-x-0 translate-x-full'}`}>
 
                 <div className='flex items-center gap-1 bg-primaryYellowMedium shadow-md p-3 text-white font-semibold cursor-pointer'
