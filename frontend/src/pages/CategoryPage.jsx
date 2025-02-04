@@ -57,52 +57,92 @@ const CategoryPage = () => {
             <SideBar />
             <div className='flex justify-center pb-10'>
                 <div className='flex gap-4 mt-28 w-full sm:w-11/12 xl:w-10/12 2xl:w-9/12'>
-                    <div className='hidden min-h-screen flex-col lg:flex xl:w-[22%] lg:w-[30%] bg-white dark:bg-stone-800 dark:text-white p-2 rounded-lg'>
+
+                    <div className='hidden flex-col lg:flex w-[400px] bg-white dark:bg-stone-800 dark:text-white p-2 rounded-lg'>
                         <div className='text-xl border-b py-2 mb-3'>FILTER</div>
-                        <div className="mb-4">Preço</div>
+                        <div className="">Preço</div>
                         <Slider
                             min={0}
                             max={1000}
-                            onChange={({ min, max }) => setPriceRange({ min, max })}
+                            onChange={({ min, max }) => {
+                                setPriceRange(prev =>
+                                    prev.min !== min || prev.max !== max ? { min, max } : prev
+                                );
+                            }}
                         />
+                        <div className='bg-pink-100 h-[5000px]'>fsfes</div>
                     </div>
-                    <div className='grid xl:grid-cols-4 xl:w-[78%] lg:w-[70%] sm:grid-cols-3 grid-cols-2  gap-3'>
-                        {filteredProducts.map((product, index) => (
-                            <div className='relative flex flex-col justify-between max-w-full h-fit bg-white rounded-lg dark:bg-stone-800 p-2 2xl:aspect-[55/100] xl:aspect-[60/100] lg:aspect-[60/100] cursor-pointer' key={index}>
-                                <div className='mb-3'>
-                                    <div className='rounded-lg p-5 bg-white'>
-                                        <img className=' hover:scale-105 transition-transform duration-150' src={`/productsImages/${product.img}`} alt={product.name} />
-                                    </div>
-                                    <div className='flex justify-between items-center mt-3'>
 
-                                        {product.discount ?
-                                            <>
-                                                <div className="flex gap-1 items-end">
-                                                    <p className='text-2xl font-bold text-red-700'>{calculateDiscountedPrice(product.price, product.discount).toFixed(2)}€</p>
-                                                    <p className=' text-stone-400'>{product.price}€</p>
-                                                </div>
-                                                <div className='absolute top-2 right-0 bg-red-700 bg-opacity-85 text-white text-xl font-semibold rounded-l-lg px-2 py-1'>{product.discount}%</div>
-                                            </>
-                                            :
-                                            <div className='text-2xl font-bold text-red-700'>{product.price}€</div>
-                                        }
+                    <div className="grid justify-between grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 h-fit">
+                        {filteredProducts.map((product, index) => (
+                            <div key={index} className="relative flex flex-col h-fit bg-white dark:bg-stone-800 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300">
+
+                                {product.discount && (
+                                    <div className="absolute top-6 right-0 bg-red-600 text-white px-3 py-1 rounded-lg font-semibold z-[9]">
+                                        -{product.discount}%
                                     </div>
-                                    <div className='font-semibold dark:text-white'>{product.name}</div>
-                                    <div className='text-stone-400 text-sm line-clamp-2'>{product.description}</div>
-                                    <div className='text-stone-400 text-sm line-clamp-2'>{product.type}</div>
-                                </div>
-                                <div className='flex justify-between text-xl dark:text-white'>
-                                    <FaRightLeft className='cursor-pointer hover:text-primaryYellowMedium transition-colors duration-150' />
-                                    <FaHeart
-                                        className={`cursor-pointer transition-colors duration-150 
-                                            ${favorites.includes(product._id) ? 'text-red-500 hover:text-red-600' : 'hover:text-red-500'}`}
-                                        onClick={() => toggleFavorite(product._id)}
+                                )}
+                                <div className="bg-white rounded-lg p-4 flex items-center justify-center">
+                                    <img
+                                        src={`/productsImages/${product.img}`}
+                                        alt={product.name}
+                                        className="w-full h-48 object-contain hover:scale-105 transition-transform duration-300 z-[8]"
                                     />
                                 </div>
-                            </div>
 
+
+                                {/* Product Details */}
+                                <div className="flex-1 p-4 flex flex-col">
+                                    <div className="mb-4 h-36">
+                                        <div className="flex items-end gap-2 mb-2">
+                                            {product.discount ? (
+                                                <>
+                                                    <span className="text-2xl font-bold text-red-600">
+                                                        {calculateDiscountedPrice(product.price, product.discount).toFixed(2)}€
+                                                    </span>
+                                                    <span className="text-sm text-gray-400 line-through">
+                                                        {product.price}€
+                                                    </span>
+                                                </>
+                                            ) : (
+                                                <span className="text-2xl font-bold text-red-600">
+                                                    {product.price}€
+                                                </span>
+                                            )}
+                                        </div>
+                                        <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                                            {product.name}
+                                        </h3>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 mb-1">
+                                            {product.description}
+                                        </p>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                                            {product.type}
+                                        </p>
+                                    </div>
+
+                                    {/* Action Buttons */}
+                                    <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
+                                        <button className="p-2 hover:text-yellow-500 transition-colors duration-200">
+                                            <FaRightLeft className="text-xl" />
+                                        </button>
+                                        <button
+                                            onClick={() => toggleFavorite(product._id)}
+                                            className="p-2 transition-colors duration-200"
+                                        >
+                                            <FaHeart
+                                                className={`text-xl ${favorites.includes(product._id)
+                                                    ? 'text-red-500 hover:text-red-600'
+                                                    : 'text-gray-400 hover:text-red-500'
+                                                    }`}
+                                            />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         ))}
                     </div>
+
                 </div>
             </div>
         </div>

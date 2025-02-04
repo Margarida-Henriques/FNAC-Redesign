@@ -2,11 +2,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 80px;
 }
 
 .slider {
   position: relative;
-  width: 230px;
+  width: 270px;
 }
 
 .slider__track,
@@ -35,8 +37,13 @@
 
 .slider__left-value,
 .slider__right-value {
+  display: flex;
+  justify-content: center;
   color: #000000;
-  font-size: 12px;
+  background-color: white;
+  border-radius: 9999px;
+  width: 50px;
+  padding: 3px;
   margin-top: 20px;
 }
 
@@ -59,7 +66,7 @@
   pointer-events: none;
   position: absolute;
   height: 0;
-  width: 230px;
+  width: 270px;
   outline: none;
 }
 
