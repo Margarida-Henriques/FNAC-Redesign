@@ -3,6 +3,7 @@ import axios from 'axios';
 import NavBar from '../components/NavBar';
 import SideBar from '../components/SideBar.jsx'
 import Context from '../Context';
+import Slider from '../components/Slider/Slider.jsx';
 
 import { FaRightLeft, FaHeart } from "react-icons/fa6";
 
@@ -11,17 +12,28 @@ const CategoryPage = () => {
     const [products, setProducts] = useState([]);
     const { categorySearched, setCategorySearched } = useContext(Context);
     const [favorites, setFavorites] = useState([]);
+    const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 });
+    const [filteredProducts, setFilteredProducts] = useState([]);
 
     useEffect(() => {
 
         axios.get('http://localhost:5555/products?', { params: { subcategory: categorySearched } })
             .then((response) => {
                 setProducts(response.data);
+                setFilteredProducts(response.data)
             })
             .catch((error) => {
                 console.error('Error fetching products:', error);
             });
     }, [categorySearched]);
+
+    useEffect(() => {
+        const filtered = products.filter(
+            (product) => product.price >= priceRange.min && product.price <= priceRange.max
+        );
+        setFilteredProducts(filtered);
+    }, [priceRange, products]);
+
 
     const calculateDiscountedPrice = (originalPrice, discountPercentage) => {
         const discountAmount = originalPrice * (discountPercentage / 100);
@@ -45,11 +57,17 @@ const CategoryPage = () => {
             <SideBar />
             <div className='flex justify-center pb-10'>
                 <div className='flex gap-4 mt-28 w-full sm:w-11/12 xl:w-10/12 2xl:w-9/12'>
-                    <div className='hidden min-h-screen lg:flex xl:w-[22%] lg:w-[30%] text-2xl bg-white dark:bg-stone-800 dark:text-white p-2 rounded-lg'>
-                        <div>FILTER</div>
+                    <div className='hidden min-h-screen flex-col lg:flex xl:w-[22%] lg:w-[30%] bg-white dark:bg-stone-800 dark:text-white p-2 rounded-lg'>
+                        <div className='text-xl border-b py-2 mb-3'>FILTER</div>
+                        <div className="mb-4">Preço</div>
+                        <Slider
+                            min={0}
+                            max={1000}
+                            onChange={({ min, max }) => setPriceRange({ min, max })}
+                        />
                     </div>
                     <div className='grid xl:grid-cols-4 xl:w-[78%] lg:w-[70%] sm:grid-cols-3 grid-cols-2  gap-3'>
-                        {products.map((product, index) => (
+                        {filteredProducts.map((product, index) => (
                             <div className='relative flex flex-col justify-between max-w-full h-fit bg-white rounded-lg dark:bg-stone-800 p-2 2xl:aspect-[55/100] xl:aspect-[60/100] lg:aspect-[60/100] cursor-pointer' key={index}>
                                 <div className='mb-3'>
                                     <div className='rounded-lg p-5 bg-white'>

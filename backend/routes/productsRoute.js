@@ -36,7 +36,6 @@ router.post('/', async (request, response) => {
 router.get('/', async (request, response) => {
     try {
         const { subcategory } = request.query;
-        console.log(request.query)
         let query = {};
 
         if (subcategory) {
