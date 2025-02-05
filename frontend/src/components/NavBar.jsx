@@ -96,7 +96,7 @@ const NavBar = () => {
             </div>
 
             {/* SecondaryNav */}
-            <div className={`fixed flex justify-center items-center w-full  md:h-7 bg-primaryYellowMedium mt-14 md:mt-16 z-10 transition-transform duration-300 ${showSecondaryNav ? 'translate-y-0' : '-translate-y-full'} `}>
+            <div className={`fixed flex justify-center items-center w-full  md:h-7 bg-primaryYellowMedium dark:bg-primaryYellowLight mt-14 md:mt-16 z-10 transition-transform duration-300 ${showSecondaryNav ? 'translate-y-0' : '-translate-y-full'} `}>
                 <div className='flex flex-col items-center py-2 gap-2 w-11/12 xl:w-10/12 2xl:w-9/12'>
 
                     {/* MOBILE RESPONSIVE  */}

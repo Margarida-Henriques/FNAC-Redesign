@@ -95,7 +95,7 @@ const SideBar = () => {
             <div className={`flex flex-col fixed h-full w-screen overflow-auto bg-white dark:text-white dark:bg-backgroundDark md:w-72 top-0 left-0 z-50 md:z-30 shadow-lg transition-transform duration-500 ease-in-out 
                 ${!sideBar ? 'md:flex hidden -translate-x-full' : secondarySideBar ? 'md:translate-x-72 ' : 'md:-translate-x-0 translate-x-full'}`}>
 
-                <div className='flex items-center gap-1 bg-primaryYellowMedium shadow-md p-3 text-white font-semibold cursor-pointer'
+                <div className='flex items-center gap-1 bg-primaryYellowMedium dark:bg-primaryYellowLight shadow-md p-3 text-white font-semibold cursor-pointer'
                     onClick={() => (setSecondarySideBar(false))}>
                     <FaChevronLeft className='text-sm text-white' />
                     <div>{selectedCategory?.name}</div>
