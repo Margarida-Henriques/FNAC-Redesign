@@ -13,16 +13,21 @@ const CategoryPage = () => {
     const { categorySearched, setCategorySearched } = useContext(Context);
     const [favorites, setFavorites] = useState([]);
 
+    const [filteredProducts, setFilteredProducts] = useState([]);
     const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 });
     const [filterBrand, setFilterBrand] = useState([]);
-    const brands = ["Apple", "HP", "Lenovo"]
-    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [filterDiscount, setFilterDiscount] = useState(false);
+    const [brandsList, setBrandsList] = useState([]);
+
 
     useEffect(() => {
         axios.get('http://localhost:5555/products?', { params: { subcategory: categorySearched } })
             .then((response) => {
                 setProducts(response.data);
                 setFilteredProducts(response.data)
+
+                const uniqueBrands = [...new Set(response.data.map(product => product.brand))];
+                setBrandsList(uniqueBrands);
             })
             .catch((error) => {
                 console.error('Error fetching products:', error);
@@ -53,12 +58,18 @@ const CategoryPage = () => {
 
         let filtered = products;
 
-        // Filtro de marca
-        if (filterBrand.length > 0) {
-            filtered = filtered.filter((product) => filterBrand.includes(product.brand));
+        // Discount filter
+
+        if (filterDiscount) {
+            filtered = filtered.filter(product => product.discount !== null);
         }
 
-        // Filtro de preço
+        // Brand filter
+        if (filterBrand.length > 0) {
+            filtered = filtered.filter(product => filterBrand.includes(product.brand));
+        }
+
+        // Price filter
         filtered = filtered.filter(
             (product) => product.price >= priceRange.min && product.price <= priceRange.max
         );
@@ -66,7 +77,7 @@ const CategoryPage = () => {
         setFilteredProducts(filtered);
 
 
-    }, [filterBrand, priceRange, products]);
+    }, [filterDiscount, filterBrand, priceRange, products]);
 
     //FILTER BRAND
     const toggleBrand = (brand) => {
@@ -81,7 +92,9 @@ const CategoryPage = () => {
         })
     }
 
-
+    const countProductPerBrand = (brand) => {
+        return products.filter(product => product.brand === brand).length;
+    }
 
 
 
@@ -98,7 +111,7 @@ const CategoryPage = () => {
                         <div className='text-xl border-b py-2 mb-3'>FILTER</div>
                         <div className="">Preço</div>
 
-                        {/* PRICE */}
+                        {/* Price */}
                         <Slider
                             min={0}
                             max={1000}
@@ -109,21 +122,40 @@ const CategoryPage = () => {
                             }}
                         />
 
-                        {/* BRAND */}
+                        {/* Brand */}
                         <div className='pt-3 border-t mb-2'>Brand</div>
                         <form>
-                            {brands.map((brand) => (
-                                <div className='flex flex-row items-center' key={brand}>
-                                    <input className='peer h-4 w-4 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-slate-600 checked:border-slate-800' onClick={() => { toggleBrand(brand) }} type="checkbox" id={brand} name={brand} value={brand} />
-                                    <svg className="absolute h-4 w-4 pointer-events-none opacity-0 peer-checked:opacity-100"
-                                        viewBox="0 0 20 20"
-                                        fill="white"
-                                        stroke="white">
-                                        <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
-                                    </svg>
-                                    <label className='ml-1' htmlFor={brand}>{brand}</label>
+                            {brandsList.map((brand, index) => (
+                                <div className='flex flex-row items-center' key={index}>
+                                    <input className='peer h-4 w-4 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-slate-600 checked:border-slate-800'
+                                        type="checkbox"
+                                        id={brand}
+                                        name={brand}
+                                        value={brand}
+                                        onClick={() => { toggleBrand(brand) }}
+
+                                    />
+                                    <svg className="absolute h-4 w-4 pointer-events-none opacity-0 peer-checked:opacity-100" viewBox="0 0 20 20" fill="white" stroke="white"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" /></svg>
+                                    <label className='ml-1' htmlFor={brand}> {brand} <span className='text-gray-400 text-sm'>({countProductPerBrand(brand)})</span></label>
                                 </div>
                             ))}
+                        </form>
+
+                        {/* Discount */}
+                        <div className='pt-3 mt-5 border-t mb-2'>More</div>
+                        <form>
+                            <div className='flex flex-row items-center'>
+                                <input className='peer h-4 w-4 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-slate-600 checked:border-slate-800'
+                                    type="checkbox"
+                                    id={"discount"}
+                                    name={"discount"}
+                                    value={"discount"}
+                                    onChange={() => (setFilterDiscount(!filterDiscount))}
+                                    checked={filterDiscount}
+                                />
+                                <svg className="absolute h-4 w-4 pointer-events-none opacity-0 peer-checked:opacity-100" viewBox="0 0 20 20" fill="white" stroke="white"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" /></svg>
+                                <label className='ml-1' htmlFor={"discount"} >Discounts</label>
+                            </div>
                         </form>
                     </div>
 
@@ -131,27 +163,29 @@ const CategoryPage = () => {
 
                     <div className="grid h-fit grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 ">
                         {filteredProducts.map((product, index) => (
+
+                            // PRODUCT CARD
                             <div key={index} className="relative flex flex-col h-fit bg-white dark:bg-zinc-800 rounded shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer">
 
-                                {/* DISCOUNT TAG */}
+                                {/* Discount tag */}
                                 {product.discount && (
                                     <div className="absolute top-6 right-0 bg-red-600 dark:bg-red-500 text-white px-3 py-1 rounded-l-full font-semibold z-[9]">
                                         -{product.discount}%
                                     </div>
                                 )}
 
-                                {/* IMG */}
+                                {/* Img */}
                                 <div className="bg-white rounded p-2 m-2 flex items-center justify-center">
                                     <img alt={product.name} className="w-full h-48 object-contain hover:scale-105 transition-transform duration-300 z-[8]"
                                         src={`/productsImages/${product.img}`}
                                     />
                                 </div>
 
-                                {/* PRODUCT INFORMATION____ */}
+                                {/* PRODUCT INFORMATION*/}
                                 <div className="flex-1 p-2 flex flex-col">
                                     <div className="mb-4 h-36">
 
-                                        {/* PRICE */}
+                                        {/* Price */}
                                         <div className="items-end gap-2 mb-2">
                                             {product.discount ? (
                                                 <>
@@ -169,7 +203,7 @@ const CategoryPage = () => {
                                             )}
                                         </div>
 
-                                        {/* INFO */}
+                                        {/* Info */}
                                         <h3 className="font-semibold text-gray-900 dark:text-neutral-300 mb-1">
                                             {product.name}
                                         </h3>
@@ -181,7 +215,7 @@ const CategoryPage = () => {
                                         </p>
                                     </div>
 
-                                    {/* BUTTONS */}
+                                    {/* Buttons */}
                                     <div className="flex justify-between items-center pt-2 border-t border-gray-100 dark:border-gray-700">
                                         <button className="p-2 hover:text-yellow-500 transition-colors duration-200">
                                             <FaRightLeft className="text-xl" />
