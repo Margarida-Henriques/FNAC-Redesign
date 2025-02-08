@@ -18,6 +18,7 @@ const CategoryPage = () => {
     const [filterBrand, setFilterBrand] = useState([]);
     const [filterDiscount, setFilterDiscount] = useState(false);
     const [brandsList, setBrandsList] = useState([]);
+    const [specsList, setSpecsList] = useState([]);
 
 
     useEffect(() => {
@@ -26,8 +27,13 @@ const CategoryPage = () => {
                 setProducts(response.data);
                 setFilteredProducts(response.data)
 
-                const uniqueBrands = [...new Set(response.data.map(product => product.brand))];
+                const uniqueBrands = [...new Set(response.data.map(product => product.brand).filter(value => value !== undefined))];
                 setBrandsList(uniqueBrands);
+
+                const specs = [...new Set(response.data.flatMap(product => product.specs ? Object.keys(product.specs) : []))];
+                setSpecsList(specs);
+
+
             })
             .catch((error) => {
                 console.error('Error fetching products:', error);
@@ -79,7 +85,7 @@ const CategoryPage = () => {
 
     }, [filterDiscount, filterBrand, priceRange, products]);
 
-    //FILTER BRAND
+    //Filter brand
     const toggleBrand = (brand) => {
         console.log(filterBrand)
         setFilterBrand(prev => {
@@ -96,7 +102,12 @@ const CategoryPage = () => {
         return products.filter(product => product.brand === brand).length;
     }
 
+    //Filter Specs
 
+    const makeSpecsFilter = (spec) => {
+        const specificSpecList = [...new Set(products.map(product => product.specs?.[spec]).filter(value => value !== undefined))];
+        return specificSpecList;
+    }
 
 
     return (
@@ -141,8 +152,33 @@ const CategoryPage = () => {
                             ))}
                         </form>
 
+                        {/* Specs */}
+                        {specsList.map(specKey => (
+                            <div key={specKey}>
+                                <div className='pt-3 mt-5 border-t mb-2'>{specKey.charAt(0).toUpperCase() + specKey.slice(1)}</div>
+                                <form>
+                                    {makeSpecsFilter(specKey).map((productSpec, index) => (
+                                        <div className='flex flex-row items-center' key={index}>
+                                            <input className='peer h-4 w-4 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-slate-600 checked:border-slate-800'
+                                                type="checkbox"
+                                                id={productSpec}
+                                                name={productSpec}
+                                                value={productSpec}
+                                                onClick={() => { toggleBrand(productSpec) }}
+
+                                            />
+                                            <svg className="absolute h-4 w-4 pointer-events-none opacity-0 peer-checked:opacity-100" viewBox="0 0 20 20" fill="white" stroke="white"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" /></svg>
+                                            <label className='ml-1' htmlFor={productSpec}> {productSpec} <span className='text-gray-400 text-sm'>({countProductPerBrand(productSpec)})</span></label>
+                                        </div>
+                                    ))}
+                                </form>
+                            </div>
+                        )
+                        )}
+
+
                         {/* Discount */}
-                        <div className='pt-3 mt-5 border-t mb-2'>More</div>
+                        <div className='pt-3 mt-5 border-t mb-2'>Related to Product</div>
                         <form>
                             <div className='flex flex-row items-center'>
                                 <input className='peer h-4 w-4 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-slate-600 checked:border-slate-800'
@@ -155,6 +191,18 @@ const CategoryPage = () => {
                                 />
                                 <svg className="absolute h-4 w-4 pointer-events-none opacity-0 peer-checked:opacity-100" viewBox="0 0 20 20" fill="white" stroke="white"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" /></svg>
                                 <label className='ml-1' htmlFor={"discount"} >Discounts</label>
+                            </div>
+                            <div className='flex flex-row items-center'>
+                                <input className='peer h-4 w-4 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-slate-600 checked:border-slate-800'
+                                    type="checkbox"
+                                    id={"discount"}
+                                    name={"discount"}
+                                    value={"discount"}
+                                    onChange={() => (setFilterDiscount(!filterDiscount))}
+                                    checked={filterDiscount}
+                                />
+                                <svg className="absolute h-4 w-4 pointer-events-none opacity-0 peer-checked:opacity-100" viewBox="0 0 20 20" fill="white" stroke="white"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" /></svg>
+                                <label className='ml-1' htmlFor={"discount"} >Stock</label>
                             </div>
                         </form>
                     </div>

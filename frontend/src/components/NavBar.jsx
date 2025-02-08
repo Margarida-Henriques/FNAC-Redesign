@@ -47,12 +47,14 @@ const NavBar = () => {
                 <div className='flex justify-between w-11/12 xl:w-10/12 2xl:w-9/12'>
 
                     <div className='flex items-center gap-6'>
-                        <Link to={"/"}><img src={logoDark} alt='fnac_logo' className='hidden md:block w-24 hover:scale-105 transition-all duration-200 cursor-pointer' /></Link>
+                        <div className='hidden md:block'>
+                            <Link to={"/"}><img src={logoDark} alt='fnac_logo' className=' w-24 hover:scale-105 transition-all duration-200 cursor-pointer' /></Link>
+                        </div>
                         <button
                             className='flex flex-row justify-center items-center gap-2 hover:text-primaryYellow active:text-primaryYellowMedium transition-all cursor-pointer'
                             onClick={() => setSideBar(!sideBar)}>
                             <FaBars className='text-2xl' />
-                            <div className='hidden md:block'>PRODUCTS</div>
+                            <div className='hidden md:flex'>PRODUCTS</div>
                         </button>
                     </div>
 

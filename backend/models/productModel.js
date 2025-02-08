@@ -35,6 +35,7 @@ const productSchema = mongoose.Schema(
             required: true,
             trim: true,
         },
+        specs: mongoose.Schema.Types.Mixed,
         img: {
             type: String,
             trim: true,
