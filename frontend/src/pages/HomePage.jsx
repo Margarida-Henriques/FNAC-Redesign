@@ -1,15 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import axios from 'axios';
+import Context from '../Context';
 import NavBar from '../components/NavBar';
 import SideBar from '../components/SideBar.jsx'
+import ProductCard from '../components/ProductCard.jsx';
+
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
-
-
 import promoSamsungAI from '../assets/promoSamsungAI.jpeg'
 import promoPowerDeals from '../assets/promoPowerDeals.jpeg'
 import promoFlashSales from '../assets/promoFlashSales.jpeg'
+import techDealsPromo from '../assets/techDealsPromo.jpg'
 
 const HomePage = () => {
+
+    const [products, setProducts] = useState([]);
+    const { deal, setDeal } = useContext(Context);
+
+    useEffect(() => {
+        axios.get('http://localhost:5555/products?')
+            .then((response) => {
+                setProducts(response.data);
+                console.log(response.data)
+
+            })
+            .catch((error) => {
+                console.error('Error fetching products:', error);
+            });
+    }, []);
 
     //SlideShow
     const slides = [
@@ -44,12 +61,31 @@ const HomePage = () => {
         setCurrentIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
     };
 
+    //Deals
+
+    const firstDealRef = useRef(null);
+
+    useEffect(() => {
+        if (deal) {
+            setTimeout(() => {
+                if (deal === "firstDeal") {
+                    firstDealRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                else if (deal === "secondDeal") {
+
+                }
+                setDeal(null);
+            }, 200);
+        }
+    }, [deal]);
+
+
     return (
         <div className=''>
             <NavBar />
             <SideBar />
             <div className='flex justify-center'>
-                <div className='grid grid-cols-2 grid-rows-[auto] gap-4 mt-28 w-full sm:w-11/12 xl:w-10/12 2xl:w-9/12'>
+                <div className='flex flex-col justify-center gap-4 mt-28 w-11/12 sm:w-11/12 xl:w-10/12 2xl:w-9/12'>
 
                     {/* SlideShow */}
                     <div className={`relative overflow-hidden col-span-2 w-full transition-colors duration-500`} style={{ backgroundColor: slides[currentIndex].color }}>
@@ -69,9 +105,31 @@ const HomePage = () => {
                         </div>
                     </div>
 
-                    <button className='col-span-2 row-start-2 active:bg-blue-400 h-[1000px]'>hsssssssssssssssssssssssssssssssi</button>
+                    <div ref={firstDealRef} className='relative p-3 mt-4 mb-3 ' style={{ backgroundImage: `url(${techDealsPromo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+                        <div className='absolute inset-0 bg-black opacity-50'></div>
+
+                        <div className='relative z-10 flex justify-between items-center w-full mb-3 text-white'>
+                            <div className='text-3xl'>TECH DEALS</div>
+                            <button>Saber mais</button>
+                        </div>
+                        <div className="grid h-fit grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 ">
+                            {products.filter(product => product.discount).map((product, index) => (
+                                <ProductCard key={index} product={product} index={index}></ProductCard>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className=''>
+                        <div className='text-3xl font-light mt-5 mb-3'>Dia dos Namorados</div>
+                        <div className="grid h-fit grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 ">
+                            {products.filter(product => product.discount).map((product, index) => (
+                                <ProductCard key={index} product={product} index={index}></ProductCard>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
+
         </div >
     )
 }

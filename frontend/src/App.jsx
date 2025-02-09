@@ -10,9 +10,19 @@ const App = () => {
   const [theme, setTheme] = useState(false);
   const [sideBar, setSideBar] = useState(false);
   const [categorySearched, setCategorySearched] = useState();
+  const [favorites, setFavorites] = useState([]);
+  const [deal, setDeal] = useState();
 
   return (
-    <Context.Provider value={{ theme, setTheme, sideBar, setSideBar, categorySearched, setCategorySearched }}>
+    <Context.Provider
+      value={{
+        theme, setTheme,
+        sideBar, setSideBar,
+        categorySearched, setCategorySearched,
+        favorites, setFavorites,
+        deal, setDeal
+      }}>
+
       <div className={`${theme && "dark"}`}>
         <div className={`min-h-screen bg-backgroundLight dark:bg-backgroundDark duration-300`}>
 

@@ -4,14 +4,12 @@ import NavBar from '../components/NavBar';
 import SideBar from '../components/SideBar.jsx'
 import Context from '../Context';
 import Slider from '../components/Slider/Slider.jsx';
-
-import { FaRightLeft, FaHeart, FaCheck } from "react-icons/fa6";
+import ProductCard from '../components/ProductCard.jsx';
 
 
 const CategoryPage = () => {
     const [products, setProducts] = useState([]);
     const { categorySearched, setCategorySearched } = useContext(Context);
-    const [favorites, setFavorites] = useState([]);
 
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 });
@@ -19,6 +17,7 @@ const CategoryPage = () => {
     const [filterDiscount, setFilterDiscount] = useState(false);
     const [brandsList, setBrandsList] = useState([]);
     const [specsList, setSpecsList] = useState([]);
+    const [filterSpecs, setFilterSpecs] = useState({});
 
 
     useEffect(() => {
@@ -41,25 +40,9 @@ const CategoryPage = () => {
     }, [categorySearched]);
 
 
-    //CALCULATE DISCOUNT
-    const calculateDiscountedPrice = (originalPrice, discountPercentage) => {
-        const discountAmount = originalPrice * (discountPercentage / 100);
-        const finalPrice = originalPrice - discountAmount;
-        return finalPrice;
-    };
-
-    //FAVORITES
-    const toggleFavorite = (productId) => {
-        setFavorites(prev => {
-            if (prev.includes(productId)) {
-                return prev.filter(id => id !== productId);
-            } else {
-                return [...prev, productId];
-            }
-        });
-    };
-
     //FILTERS_______________________________________________________!
+
+    //Filter Products!!!!
     useEffect(() => {
 
         let filtered = products;
@@ -87,7 +70,6 @@ const CategoryPage = () => {
 
     //Filter brand
     const toggleBrand = (brand) => {
-        console.log(filterBrand)
         setFilterBrand(prev => {
             if (prev.includes(brand)) {
                 return prev.filter(prevBrand => prevBrand !== brand)
@@ -103,10 +85,34 @@ const CategoryPage = () => {
     }
 
     //Filter Specs
-
     const makeSpecsFilter = (spec) => {
         const specificSpecList = [...new Set(products.map(product => product.specs?.[spec]).filter(value => value !== undefined))];
         return specificSpecList;
+    }
+
+    const toggleSpecs = (specKey, specValue) => {
+
+        setFilterSpecs(prev => {
+            const newSpecs = { ...prev };
+
+            // If this spec key doesn't exist yet, create an array for it
+            if (!newSpecs[specKey]) {
+                newSpecs[specKey] = [specValue];
+            } else {
+                // If value exists, remove it; if not, add it
+                if (newSpecs[specKey].includes(specValue)) {
+                    newSpecs[specKey] = newSpecs[specKey].filter(value => value !== specValue);
+                    // If array is empty, remove the key entirely
+                    if (newSpecs[specKey].length === 0) {
+                        delete newSpecs[specKey];
+                    }
+                } else {
+                    newSpecs[specKey] = [...newSpecs[specKey], specValue];
+                }
+            }
+
+            return newSpecs;
+        });
     }
 
 
@@ -164,7 +170,8 @@ const CategoryPage = () => {
                                                 id={productSpec}
                                                 name={productSpec}
                                                 value={productSpec}
-                                                onClick={() => { toggleBrand(productSpec) }}
+                                                onClick={() => toggleSpecs(specKey, productSpec)}
+                                                checked={filterSpecs[specKey]?.includes(productSpec) || false}
 
                                             />
                                             <svg className="absolute h-4 w-4 pointer-events-none opacity-0 peer-checked:opacity-100" viewBox="0 0 20 20" fill="white" stroke="white"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" /></svg>
@@ -211,75 +218,7 @@ const CategoryPage = () => {
 
                     <div className="grid h-fit grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 ">
                         {filteredProducts.map((product, index) => (
-
-                            // PRODUCT CARD
-                            <div key={index} className="relative flex flex-col h-fit bg-white dark:bg-zinc-800 rounded shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer">
-
-                                {/* Discount tag */}
-                                {product.discount && (
-                                    <div className="absolute top-6 right-0 bg-red-600 dark:bg-red-500 text-white px-3 py-1 rounded-l-full font-semibold z-[9]">
-                                        -{product.discount}%
-                                    </div>
-                                )}
-
-                                {/* Img */}
-                                <div className="bg-white rounded p-2 m-2 flex items-center justify-center">
-                                    <img alt={product.name} className="w-full h-48 object-contain hover:scale-105 transition-transform duration-300 z-[8]"
-                                        src={`/productsImages/${product.img}`}
-                                    />
-                                </div>
-
-                                {/* PRODUCT INFORMATION*/}
-                                <div className="flex-1 p-2 flex flex-col">
-                                    <div className="mb-4 h-36">
-
-                                        {/* Price */}
-                                        <div className="items-end gap-2 mb-2">
-                                            {product.discount ? (
-                                                <>
-                                                    <span className="text-2xl mr-1 font-bold text-red-600 dark:text-red-400">
-                                                        {calculateDiscountedPrice(product.price, product.discount).toFixed(2)}€
-                                                    </span>
-                                                    <span className="text-sm text-gray-400 line-through">
-                                                        {product.price}€
-                                                    </span>
-                                                </>
-                                            ) : (
-                                                <span className="text-2xl font-bold text-red-600 dark:text-red-400">
-                                                    {product.price}€
-                                                </span>
-                                            )}
-                                        </div>
-
-                                        {/* Info */}
-                                        <h3 className="font-semibold text-gray-900 dark:text-neutral-300 mb-1">
-                                            {product.name}
-                                        </h3>
-                                        <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 mb-1">
-                                            {product.description}
-                                        </p>
-                                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                                            {product.brand}
-                                        </p>
-                                    </div>
-
-                                    {/* Buttons */}
-                                    <div className="flex justify-between items-center pt-2 border-t border-gray-100 dark:border-gray-700">
-                                        <button className="p-2 hover:text-yellow-500 transition-colors duration-200">
-                                            <FaRightLeft className="text-xl" />
-                                        </button>
-                                        <button className="p-2 transition-colors duration-200"
-                                            onClick={() => toggleFavorite(product._id)}
-                                        >
-                                            <FaHeart className={`text-xl ${favorites.includes(product._id)
-                                                ? 'text-red-500 hover:scale-125 transition-transform'
-                                                : 'text-gray-400 hover:scale-125 transition-transform'
-                                                }`}
-                                            />
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                            <ProductCard key={index} product={product} index={index}></ProductCard>
                         ))}
                     </div>
 

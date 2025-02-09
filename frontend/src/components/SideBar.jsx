@@ -51,7 +51,6 @@ const SideBar = () => {
     };
 
     const searchCategoryClick = async (subcategory) => {
-        console.log(subcategory)
         setCategorySearched(subcategory)
         navigate("/Category");
         handleCloseBoth();

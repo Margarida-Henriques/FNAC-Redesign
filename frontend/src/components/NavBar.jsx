@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Context from '../Context';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import lego from '../assets/lego.png'
 import fnacRestart from '../assets/fnacRestart.png'
 import NTF from '../assets/NTF.png'
@@ -9,8 +9,11 @@ import { FaSun, FaMoon, FaBars, FaUser, FaCartShopping, FaMagnifyingGlass, FaBul
 
 const NavBar = () => {
 
+    const navigate = useNavigate();
+
     const { theme, setTheme } = useContext(Context);
     const { sideBar, setSideBar } = useContext(Context);
+    const { deal, setDeal } = useContext(Context);
     const [showSecondaryNav, setShowSecondaryNav] = useState(true);
 
     useEffect(() => {
@@ -36,6 +39,11 @@ const NavBar = () => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
+
+    const goToDeal = (deal) => {
+        navigate("/");
+        setDeal(deal);
+    }
 
 
     // w-11/12 xl:w-10/12 2xl:w-9/12
@@ -114,26 +122,26 @@ const NavBar = () => {
                     </form>
                     <div className='hidden md:grid lg:grid-cols-5 grid-cols-4 w-full text-xs text-white justify-between'>
 
-                        <div className='flex justify-center p-1 items-center gap-2 w-full h-full cursor-pointer hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.4)] transition-all duration-300'>
+                        <button onClick={() => { goToDeal("firstDeal") }} className='flex justify-center p-1 items-center gap-2 w-full h-full cursor-pointer hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.4)] transition-all duration-300'>
                             <FaBullhorn className='text-lg' />
-                            POWER DEALS
-                        </div>
-                        <div className='flex justify-center p-1 items-center gap-2 w-full h-full cursor-pointer hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.4)] transition-all duration-300'>
+                            TECH DEALS
+                        </button>
+                        <button className='flex justify-center p-1 items-center gap-2 w-full h-full cursor-pointer hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.4)] transition-all duration-300'>
                             <FaPuzzlePiece className='text-lg' />
-                            DIA MUNDIAL DO PUZZLE
-                        </div>
-                        <div className='flex justify-center p-1 items-center gap-2 w-full h-full cursor-pointer hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.4)] transition-all duration-300'>
+                            DIA DOS NAMORADOS
+                        </button>
+                        <button className='flex justify-center p-1 items-center gap-2 w-full h-full cursor-pointer hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.4)] transition-all duration-300'>
                             <img className='w-6' src={lego}></img>
-                            LEGO DAY
-                        </div>
-                        <div className='flex justify-center p-1 items-center gap-2 w-full h-full cursor-pointer hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.4)] transition-all duration-300'>
+                            REGRESSO UNIVERSITÁRIO
+                        </button>
+                        <button className='flex justify-center p-1 items-center gap-2 w-full h-full cursor-pointer hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.4)] transition-all duration-300'>
                             <img className='w-7' src={fnacRestart}></img>
                             RETOMAS FNAC
-                        </div>
-                        <div className='hidden lg:flex justify-center p-1 items-center gap-2 w-full h-full cursor-pointer hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.4)] transition-all duration-300'>
+                        </button>
+                        <button className='hidden lg:flex justify-center p-1 items-center gap-2 w-full h-full cursor-pointer hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.4)] transition-all duration-300'>
                             <img className='w-6' src={NTF}></img>
                             NOVOS TALENTOS FNAC
-                        </div>
+                        </button>
                     </div>
                 </div>
             </div>
