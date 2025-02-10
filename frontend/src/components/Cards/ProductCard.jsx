@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { FaRightLeft, FaHeart } from "react-icons/fa6";
-import Context from "../Context"
+import Context from "../../Context"
 
 const ProductCard = ({ product, index }) => {
 
@@ -79,14 +79,14 @@ const ProductCard = ({ product, index }) => {
 
                 {/* Buttons */}
                 <div className="flex justify-between items-center pt-2 border-t border-gray-100 dark:border-gray-700">
-                    <button className="p-2 hover:text-yellow-500 transition-colors duration-200">
-                        <FaRightLeft className="text-xl" />
+                    <button className="p-2 text-gray-400 hover:scale-125 active:text-primaryYellowMedium transition-all duration-200">
+                        <FaRightLeft className="text-xl " />
                     </button>
                     <button className="p-2 transition-colors duration-200"
                         onClick={() => toggleFavorite(product._id)}
                     >
                         <FaHeart className={`text-xl ${favorites.includes(product._id)
-                            ? 'text-red-500 hover:scale-125 transition-transform'
+                            ? 'text-red-500 hover:scale-125 active:text-red-700 transition-transform'
                             : 'text-gray-400 hover:scale-125 transition-transform'
                             }`}
                         />

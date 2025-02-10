@@ -4,7 +4,7 @@ import NavBar from '../components/NavBar';
 import SideBar from '../components/SideBar.jsx'
 import Context from '../Context';
 import Slider from '../components/Slider/Slider.jsx';
-import ProductCard from '../components/ProductCard.jsx';
+import ProductCard from '../components/Cards/ProductCard.jsx';
 
 
 const CategoryPage = () => {

@@ -12,7 +12,7 @@ export default {
         primaryYellowMedium: "#df8f00",
         primaryYellowDark: "#b96504",
 
-        backgroundLight: "rgba(245, 245, 245)",
+        backgroundLight: "rgba(248, 244, 244)",
         backgroundDark: "rgba(18, 18, 18)"
       },
     },
