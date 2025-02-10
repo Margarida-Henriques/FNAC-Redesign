@@ -16,27 +16,39 @@ const CategoryPage = () => {
     const [filterBrand, setFilterBrand] = useState([]);
     const [filterDiscount, setFilterDiscount] = useState(false);
     const [brandsList, setBrandsList] = useState([]);
-    const [specsList, setSpecsList] = useState([]);
     const [filterSpecs, setFilterSpecs] = useState({});
+
+    const [currentCategory, setCurrentCategory] = useState(null);
 
 
     useEffect(() => {
-        axios.get('http://localhost:5555/products?', { params: { subcategory: categorySearched } })
-            .then((response) => {
-                setProducts(response.data);
-                setFilteredProducts(response.data)
+        const fetchProductsAndCategory = async () => {
+            try {
+                const [productsResponse, categoriesResponse] = await Promise.all([
+                    axios.get('http://localhost:5555/products', {
+                        params: { subcategory: categorySearched }
+                    }),
+                    axios.get('http://localhost:5555/category')
+                ]);
 
-                const uniqueBrands = [...new Set(response.data.map(product => product.brand).filter(value => value !== undefined))];
+                setProducts(productsResponse.data);
+                setFilteredProducts(productsResponse.data);
+
+                // Find current category and its filters
+                const category = categoriesResponse.data.find(cat =>
+                    cat.subcategories.some(sub => sub.name === categorySearched)
+                );
+                console.log(category)
+                setCurrentCategory(category);
+
+                const uniqueBrands = [...new Set(productsResponse.data.map(product => product.brand))];
                 setBrandsList(uniqueBrands);
 
-                const specs = [...new Set(response.data.flatMap(product => product.specs ? Object.keys(product.specs) : []))];
-                setSpecsList(specs);
-
-
-            })
-            .catch((error) => {
+            } catch (error) {
                 console.error('Error fetching products:', error);
-            });
+            };
+        }
+        fetchProductsAndCategory();
     }, [categorySearched]);
 
 
@@ -85,10 +97,32 @@ const CategoryPage = () => {
     }
 
     //Filter Specs
-    const makeSpecsFilter = (spec) => {
-        const specificSpecList = [...new Set(products.map(product => product.specs?.[spec]).filter(value => value !== undefined))];
-        return specificSpecList;
-    }
+    const renderCategoryFilters = () => {
+        const subcategory = currentCategory?.subcategories.find(sub => sub.name === categorySearched);
+        return subcategory?.filters.map(filter => (
+            <div key={filter.name}>
+                <div className='pt-3 mt-5 border-t mb-2'>{filter.displayName}</div>
+                <form>
+                    {filter.options.map((option, index) => (
+                        <div key={index} className='flex flex-row items-center'>
+                            <input
+                                type="checkbox"
+                                id={option}
+                                name={option}
+                                value={option}
+                                className='peer h-4 w-4 cursor-pointer'
+                                onClick={() => toggleSpecs(filter.name, option)}
+                                checked={filterSpecs[filter.name]?.includes(option) || false}
+                            />
+                            <label className='ml-1' htmlFor={option}>
+                                {option}
+                            </label>
+                        </div>
+                    ))}
+                </form>
+            </div>
+        ));
+    };
 
     const toggleSpecs = (specKey, specValue) => {
 
@@ -159,29 +193,7 @@ const CategoryPage = () => {
                         </form>
 
                         {/* Specs */}
-                        {specsList.map(specKey => (
-                            <div key={specKey}>
-                                <div className='pt-3 mt-5 border-t mb-2'>{specKey.charAt(0).toUpperCase() + specKey.slice(1)}</div>
-                                <form>
-                                    {makeSpecsFilter(specKey).map((productSpec, index) => (
-                                        <div className='flex flex-row items-center' key={index}>
-                                            <input className='peer h-4 w-4 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-slate-600 checked:border-slate-800'
-                                                type="checkbox"
-                                                id={productSpec}
-                                                name={productSpec}
-                                                value={productSpec}
-                                                onClick={() => toggleSpecs(specKey, productSpec)}
-                                                checked={filterSpecs[specKey]?.includes(productSpec) || false}
-
-                                            />
-                                            <svg className="absolute h-4 w-4 pointer-events-none opacity-0 peer-checked:opacity-100" viewBox="0 0 20 20" fill="white" stroke="white"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" /></svg>
-                                            <label className='ml-1' htmlFor={productSpec}> {productSpec} <span className='text-gray-400 text-sm'>({countProductPerBrand(productSpec)})</span></label>
-                                        </div>
-                                    ))}
-                                </form>
-                            </div>
-                        )
-                        )}
+                        {renderCategoryFilters()}
 
 
                         {/* Discount */}

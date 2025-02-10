@@ -16,8 +16,7 @@ const iconMap = {
 const SideBar = () => {
     const navigate = useNavigate();
 
-    const { sideBar, setSideBar } = useContext(Context);
-    const { categorySearched, setCategorySearched } = useContext(Context);
+    const { sideBar, setSideBar, categorySearched, setCategorySearched } = useContext(Context);
     const [secondarySideBar, setSecondarySideBar] = useState(false);
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -30,7 +29,7 @@ const SideBar = () => {
                 setCategories(response.data);
             })
             .catch((error) => {
-                console.log(error);
+                console.error('Failed to fetch categories:', error);
             });
 
     }, [])
@@ -44,7 +43,7 @@ const SideBar = () => {
         if (category == selectedCategory && secondarySideBar) {
             setSecondarySideBar(false);
         } else {
-            setSubcategories(category.subcategories)
+            setSubcategories(category.subcategories.map(sub => sub.name))
             setSelectedCategory(category);
             setSecondarySideBar(true);
         }
