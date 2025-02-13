@@ -60,7 +60,6 @@ const CategoryPage = () => {
         let filtered = products;
 
         // Discount filter
-
         if (filterDiscount) {
             filtered = filtered.filter(product => product.discount !== null);
         }
@@ -75,10 +74,35 @@ const CategoryPage = () => {
             (product) => product.price >= priceRange.min && product.price <= priceRange.max
         );
 
+        // Specs Filter
+        if (Object.keys(filterSpecs).length > 0) {
+            filtered = filtered.filter(product => {
+                // Check each spec category (ram, storage_type, etc.)
+                return Object.entries(filterSpecs).every(([specKey, selectedValues]) => {
+                    // If the product doesn't have specs or the specific spec, filter it out
+                    if (!product.specs || !product.specs[specKey]) {
+                        return false;
+                    }
+
+                    // For display_size, we need to match the category instead of the exact value
+                    if (specKey === 'display_size') {
+                        // Get the display category from the product's specs
+                        const displayCategory = product.specs.display_category;
+                        // Check if any of the selected display size categories match
+                        return selectedValues.includes(displayCategory);
+                    }
+
+                    // For all other specs, check if the product's spec value is in the selected values
+                    return selectedValues.includes(product.specs[specKey]);
+                });
+            });
+        }
+
+
         setFilteredProducts(filtered);
 
 
-    }, [filterDiscount, filterBrand, priceRange, products]);
+    }, [filterSpecs, filterDiscount, filterBrand, priceRange, products]);
 
     //Filter brand
     const toggleBrand = (brand) => {
@@ -110,10 +134,11 @@ const CategoryPage = () => {
                                 id={option}
                                 name={option}
                                 value={option}
-                                className='peer h-4 w-4 cursor-pointer'
+                                className='peer h-4 w-4 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-slate-600 checked:border-slate-800'
                                 onClick={() => toggleSpecs(filter.name, option)}
                                 checked={filterSpecs[filter.name]?.includes(option) || false}
                             />
+                            <svg className="absolute h-4 w-4 pointer-events-none opacity-0 peer-checked:opacity-100" viewBox="0 0 20 20" fill="white" stroke="white"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" /></svg>
                             <label className='ml-1' htmlFor={option}>
                                 {option}
                             </label>
@@ -125,6 +150,8 @@ const CategoryPage = () => {
     };
 
     const toggleSpecs = (specKey, specValue) => {
+
+        console.log(specKey, specValue)
 
         setFilterSpecs(prev => {
             const newSpecs = { ...prev };
