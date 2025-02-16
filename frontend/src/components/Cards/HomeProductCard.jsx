@@ -15,7 +15,7 @@ const HomeProductCard = ({ product, index }) => {
 
     return (
 
-        <div key={index} className="relative flex flex-col h-fit bg-white dark:bg-zinc-800 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer">
+        <div key={index} className="relative flex flex-col h-full bg-white dark:bg-zinc-800 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer">
 
             {/* Discount tag */}
             {product.discount && (

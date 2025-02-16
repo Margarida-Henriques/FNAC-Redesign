@@ -17,16 +17,19 @@ const SideBar = () => {
     const navigate = useNavigate();
 
     const { sideBar, setSideBar, categorySearched, setCategorySearched } = useContext(Context);
-    const [secondarySideBar, setSecondarySideBar] = useState(false);
     const [categories, setCategories] = useState([]);
+
+    const [secondarySideBar, setSecondarySideBar] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [subcategories, setSubcategories] = useState([]);
+
 
 
     useEffect(() => {
         axios.get('http://localhost:5555/category')
             .then((response) => {
                 setCategories(response.data);
+                console.log(categories)
             })
             .catch((error) => {
                 console.error('Failed to fetch categories:', error);
@@ -50,6 +53,7 @@ const SideBar = () => {
     };
 
     const searchCategoryClick = async (subcategory) => {
+
         setCategorySearched(subcategory)
         navigate("/Category");
         handleCloseBoth();
@@ -57,8 +61,7 @@ const SideBar = () => {
 
 
     return (
-        <div className={``}>
-
+        <div>
             {/* Black background */}
             <div className={`fixed inset-0 bg-black bg-opacity-50 z-20 cursor-pointer transform-none duration-500 
                 ${sideBar ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}

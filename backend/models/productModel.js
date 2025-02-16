@@ -39,6 +39,10 @@ const productSchema = mongoose.Schema(
         img: {
             type: String,
             trim: true,
+        },
+        stock: {
+            type: Boolean,
+            required: true,
         }
     },
     { timestamps: true }

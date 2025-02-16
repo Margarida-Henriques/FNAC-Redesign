@@ -50,12 +50,12 @@ const NavBar = () => {
     return (
         <div className=''>
             {/* PrimaryNav */}
-            <nav className='fixed w-full py-2 xl:pb-1 xl:pt-2 flex justify-center items-center flex-col gap-4 bg-backgroundLight dark:bg-backgroundDark  dark:text-white font-semibold text-lg shadow-lg z-20'>
+            <nav className='fixed w-full pb-1 pt-2 flex justify-center items-center flex-col gap-4 bg-backgroundLight dark:bg-backgroundDark  dark:text-white font-semibold text-lg shadow-lg z-20'>
                 <div className='flex justify-between w-11/12 xl:w-10/12 2xl:w-9/12'>
 
-                    <div className='flex items-center gap-6'>
+                    <div className='flex items-center gap-5'>
                         <div className='hidden md:block'>
-                            <Link to={"/"}><img src={`${theme ? logoDark : logo}`} alt='fnac_logo' className='mb-2 w-24 hover:scale-105 transition-all duration-200 cursor-pointer' /></Link>
+                            <Link to={"/"}><img src={`${theme ? logoDark : logo}`} alt='fnac_logo' className=' w-20 hover:scale-105 transition-all duration-200 cursor-pointer' /></Link>
                         </div>
                         <button
                             className='flex flex-row justify-center items-center gap-2 hover:text-primaryYellow active:text-primaryYellowMedium transition-all cursor-pointer'
@@ -110,7 +110,7 @@ const NavBar = () => {
             </nav>
 
             {/* SecondaryNav */}
-            <nav className={`fixed flex justify-center items-center w-full h-fit mt-12 md:mt-14 bg-backgroundDark dark:bg-gradient-to-b dark:from-backgroundDark dark:to-stone-800 z-10 transition-transform duration-300 ${showSecondaryNav ? 'translate-y-0' : '-translate-y-full'} `}>
+            <nav className={`fixed flex justify-center items-center w-full h-fit mt-12 md:mt-12 bg-backgroundDark dark:bg-gradient-to-b dark:from-backgroundDark dark:to-stone-800 z-10 transition-transform duration-300 ${showSecondaryNav ? 'translate-y-0' : '-translate-y-full'} `}>
                 <div className='flex flex-col items-center gap-2 w-11/12 xl:w-10/12 2xl:w-9/12'>
 
                     {/* MOBILE RESPONSIVE  */}

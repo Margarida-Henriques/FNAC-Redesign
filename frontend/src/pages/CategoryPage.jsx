@@ -10,16 +10,20 @@ import ProductCard from '../components/Cards/ProductCard.jsx';
 const CategoryPage = () => {
     const [products, setProducts] = useState([]);
     const { categorySearched, setCategorySearched } = useContext(Context);
-
     const [filteredProducts, setFilteredProducts] = useState([]);
-    const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 });
-    const [filterBrand, setFilterBrand] = useState([]);
-    const [filterDiscount, setFilterDiscount] = useState(false);
-    const [brandsList, setBrandsList] = useState([]);
-    const [filterSpecs, setFilterSpecs] = useState({});
 
+    const [filters, setFilters] = useState({
+        priceRange: { min: 0, max: 1000 },
+        brands: [],
+        showDiscounted: false,
+        showInStock: false,
+        specs: {}
+    });
+
+    const [brandsList, setBrandsList] = useState([]);
     const [currentCategory, setCurrentCategory] = useState(null);
 
+    //FETCH_____________________________________________________________________
 
     useEffect(() => {
         const fetchProductsAndCategory = async () => {
@@ -38,7 +42,6 @@ const CategoryPage = () => {
                 const category = categoriesResponse.data.find(cat =>
                     cat.subcategories.some(sub => sub.name === categorySearched)
                 );
-                console.log(category)
                 setCurrentCategory(category);
 
                 const uniqueBrands = [...new Set(productsResponse.data.map(product => product.brand))];
@@ -54,17 +57,18 @@ const CategoryPage = () => {
 
     //FILTERS_______________________________________________________!
 
-    //Filter Products!!!!
     useEffect(() => {
 
         let filtered = products;
 
-        // Discount filter
         if (filterDiscount) {
             filtered = filtered.filter(product => product.discount !== null);
         }
 
-        // Brand filter
+        if (filterStock) {
+            filtered = filtered.filter(product => product.stock !== false);
+        }
+
         if (filterBrand.length > 0) {
             filtered = filtered.filter(product => filterBrand.includes(product.brand));
         }
@@ -77,6 +81,7 @@ const CategoryPage = () => {
         // Specs Filter
         if (Object.keys(filterSpecs).length > 0) {
             filtered = filtered.filter(product => {
+                // console.log(Object.entries(filterSpecs))
                 // Check each spec category (ram, storage_type, etc.)
                 return Object.entries(filterSpecs).every(([specKey, selectedValues]) => {
                     // If the product doesn't have specs or the specific spec, filter it out
@@ -98,13 +103,12 @@ const CategoryPage = () => {
             });
         }
 
-
         setFilteredProducts(filtered);
 
+    }, [filterSpecs, filterDiscount, filterStock, filterBrand, priceRange, products]);
 
-    }, [filterSpecs, filterDiscount, filterBrand, priceRange, products]);
+    //Filter brand_____________________________________________________________________
 
-    //Filter brand
     const toggleBrand = (brand) => {
         setFilterBrand(prev => {
             if (prev.includes(brand)) {
@@ -120,7 +124,7 @@ const CategoryPage = () => {
         return products.filter(product => product.brand === brand).length;
     }
 
-    //Filter Specs
+    //Filter Specs_____________________________________________________________________
     const renderCategoryFilters = () => {
         const subcategory = currentCategory?.subcategories.find(sub => sub.name === categorySearched);
         return subcategory?.filters.map(filter => (
@@ -135,7 +139,7 @@ const CategoryPage = () => {
                                 name={option}
                                 value={option}
                                 className='peer h-4 w-4 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-slate-600 checked:border-slate-800'
-                                onClick={() => toggleSpecs(filter.name, option)}
+                                onChange={() => toggleSpecs(filter.name, option)}
                                 checked={filterSpecs[filter.name]?.includes(option) || false}
                             />
                             <svg className="absolute h-4 w-4 pointer-events-none opacity-0 peer-checked:opacity-100" viewBox="0 0 20 20" fill="white" stroke="white"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" /></svg>
@@ -150,8 +154,6 @@ const CategoryPage = () => {
     };
 
     const toggleSpecs = (specKey, specValue) => {
-
-        console.log(specKey, specValue)
 
         setFilterSpecs(prev => {
             const newSpecs = { ...prev };
@@ -192,7 +194,7 @@ const CategoryPage = () => {
                         {/* Price */}
                         <Slider
                             min={0}
-                            max={1000}
+                            max={2000}
                             onChange={({ min, max }) => {
                                 setPriceRange(prev =>
                                     prev.min !== min || prev.max !== max ? { min, max } : prev
@@ -210,8 +212,7 @@ const CategoryPage = () => {
                                         id={brand}
                                         name={brand}
                                         value={brand}
-                                        onClick={() => { toggleBrand(brand) }}
-
+                                        onChange={() => { toggleBrand(brand) }}
                                     />
                                     <svg className="absolute h-4 w-4 pointer-events-none opacity-0 peer-checked:opacity-100" viewBox="0 0 20 20" fill="white" stroke="white"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" /></svg>
                                     <label className='ml-1' htmlFor={brand}> {brand} <span className='text-gray-400 text-sm'>({countProductPerBrand(brand)})</span></label>
@@ -238,17 +239,18 @@ const CategoryPage = () => {
                                 <svg className="absolute h-4 w-4 pointer-events-none opacity-0 peer-checked:opacity-100" viewBox="0 0 20 20" fill="white" stroke="white"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" /></svg>
                                 <label className='ml-1' htmlFor={"discount"} >Discounts</label>
                             </div>
+                            {/* Stock */}
                             <div className='flex flex-row items-center'>
                                 <input className='peer h-4 w-4 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-slate-600 checked:border-slate-800'
                                     type="checkbox"
-                                    id={"discount"}
-                                    name={"discount"}
-                                    value={"discount"}
-                                    onChange={() => (setFilterDiscount(!filterDiscount))}
-                                    checked={filterDiscount}
+                                    id={"stock"}
+                                    name={"stock"}
+                                    value={"stock"}
+                                    onChange={() => (setFilterStock(!filterStock))}
+                                    checked={filterStock}
                                 />
                                 <svg className="absolute h-4 w-4 pointer-events-none opacity-0 peer-checked:opacity-100" viewBox="0 0 20 20" fill="white" stroke="white"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" /></svg>
-                                <label className='ml-1' htmlFor={"discount"} >Stock</label>
+                                <label className='ml-1' htmlFor={"stock"} >Stock</label>
                             </div>
                         </form>
                     </div>

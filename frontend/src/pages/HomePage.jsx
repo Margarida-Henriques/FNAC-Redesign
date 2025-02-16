@@ -20,7 +20,6 @@ const HomePage = () => {
         axios.get('http://localhost:5555/products?')
             .then((response) => {
                 setProducts(response.data);
-                console.log(response.data)
 
             })
             .catch((error) => {
@@ -29,6 +28,7 @@ const HomePage = () => {
     }, []);
 
     //SlideShow
+
     const slides = [
         {
             img: promoSamsungAI,
@@ -61,8 +61,8 @@ const HomePage = () => {
         setCurrentIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
     };
 
-    //Deals
 
+    //Deals
     const firstDealRef = useRef(null);
 
     useEffect(() => {
