@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useMemo } from 'react';
+import React, { useEffect, useState, useContext, useMemo, useCallback } from 'react';
 import axios from 'axios';
 import NavBar from '../components/NavBar';
 import SideBar from '../components/SideBar.jsx';
@@ -47,7 +47,7 @@ const CategoryPage = () => {
         fetchProductsAndCategory();
     }, [categorySearched]);
 
-    // Filter products using useMemo for better performance
+    // Filter products 
     const filteredProducts = useMemo(() => {
         return products.filter(product => {
 
@@ -90,9 +90,12 @@ const CategoryPage = () => {
     }, [products, filters]);
 
     // Filter update handlers
-    const updatePriceRange = ({ min, max }) => {
-        setFilters(prev => ({ ...prev, priceRange: { min, max } }));
-    };
+    const updatePriceRange = useCallback(({ min, max }) => {
+        setFilters(prev => ({
+            ...prev,
+            priceRange: { min, max }
+        }));
+    }, []);
 
     const toggleBrand = (brand) => {
         setFilters(prev => ({
@@ -177,13 +180,13 @@ const CategoryPage = () => {
                     <div className='hidden flex-col lg:flex w-[280px] min-h-screen bg-white dark:bg-zinc-800 dark:text-neutral-300 p-2 rounded'>
                         <div className='text-xl border-b py-2 mb-3'>FILTER</div>
 
-                        {/* Price Filter
-                        <div className="">Preço</div>
+                        {/* Price Filter */}
+                        <div className="">Price</div>
                         <Slider
                             min={0}
                             max={2000}
                             onChange={updatePriceRange}
-                        /> */}
+                        />
 
                         {/* Brand Filter */}
                         <div className='pt-3 border-t mb-2'>Brand</div>
