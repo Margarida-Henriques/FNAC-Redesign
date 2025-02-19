@@ -25,8 +25,8 @@ const HomeProductCard = ({ product, index }) => {
             )}
 
             {/* Img */}
-            <div className="bg-white rounded-t pt-2 px-2 m-2 flex items-center justify-center">
-                <img alt={product.name} className="w-full h-48 object-contain hover:scale-105 transition-transform duration-300 z-[8]"
+            <div className="bg-white rounded-t p-2 m-2 flex items-center justify-center">
+                <img alt={product.name} className="w-full h-36 object-contain hover:scale-105 transition-transform duration-300 z-[8]"
                     src={`/productsImages/${product.img}`}
                 />
             </div>
@@ -39,7 +39,7 @@ const HomeProductCard = ({ product, index }) => {
                     <div className="items-end gap-2 mb-2">
                         {product.discount ? (
                             <>
-                                <span className="text-2xl mr-1 font-bold text-red-600 dark:text-red-400">
+                                <span className="text-xl mr-1 font-bold text-red-600 dark:text-red-400">
                                     {calculateDiscountedPrice(product.price, product.discount).toFixed(2)}€
                                 </span>
                                 <span className="text-sm text-gray-400 line-through">
@@ -47,14 +47,14 @@ const HomeProductCard = ({ product, index }) => {
                                 </span>
                             </>
                         ) : (
-                            <span className="text-2xl font-bold text-red-600 dark:text-red-400">
+                            <span className="text-xl font-bold text-red-600 dark:text-red-400">
                                 {product.price}€
                             </span>
                         )}
                     </div>
 
                     {/* Info */}
-                    <h3 className="font-semibold text-gray-900 dark:text-neutral-300">
+                    <h3 className="font-semibold text-sm text-gray-900 dark:text-neutral-300 line-clamp-1">
                         {product.name}
                     </h3>
                 </div>

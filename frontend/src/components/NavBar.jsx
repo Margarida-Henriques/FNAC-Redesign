@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Context from '../Context';
 import { Link, useNavigate } from 'react-router-dom';
-import lego from '../assets/lego.png'
 import fnacRestart from '../assets/fnacRestart.png'
 import NTF from '../assets/NTF.png'
 import logoDark from '../assets/logoDark.png'
 import logo from '../assets/logoY.png'
-import { FaSun, FaMoon, FaBars, FaUser, FaCartShopping, FaMagnifyingGlass, FaBullhorn, FaPuzzlePiece } from "react-icons/fa6";
+import { FaSun, FaMoon, FaBars, FaUser, FaCartShopping, FaMagnifyingGlass, FaBullhorn, FaCertificate, FaAddressCard, FaHeadset, FaHeart } from "react-icons/fa6";
 
 const NavBar = () => {
 
@@ -127,26 +126,27 @@ const NavBar = () => {
 
                     <div className='hidden md:grid lg:grid-cols-5 grid-cols-4 w-full text-xs text-white justify-between'>
 
-                        <button onClick={() => { goToDeal("firstDeal") }} className='flex justify-center persp items-center gap-2 w-full h-full py-[8px] bg-primaryYellowMedium hover:shadow-[inset_0px_-4px_0px_0px_rgba(227,_227,_227,_0.7)] transition-all duration-200 cursor-pointer'>
-                            <FaBullhorn className='text-lg' />
-                            <div>TECH DEALS</div>
+                        <button onClick={() => { goToDeal("firstDeal") }} className='flex justify-center persp items-center gap-2 w-full h-full py-[8px] hover:shadow-[inset_0px_-4px_0px_0px_rgba(227,_227,_227,_0.7)] transition-all duration-200 cursor-pointer text-red-500'>
+                            <FaCertificate className='text-lg' />
+                            <div>ON SALE!</div>
                         </button>
-                        <button className='flex justify-center items-center gap-2 w-full h-full hover:shadow-[inset_0px_-4px_0px_0px_rgba(227,_227,_227,_0.7)] transition-all duration-300 cursor-pointer'>
-                            <FaPuzzlePiece className='text-lg' />
+                        <button className='flex justify-center items-center gap-2 w-full h-full hover:shadow-[inset_0px_-4px_0px_0px_rgba(227,_227,_227,_0.7)] transition-all duration-300 cursor-pointer text-blue-400'>
+                            <FaBullhorn className='text-base' />
+                            NEW TECH
+                        </button>
+                        <button className='hidden lg:flex justify-center items-center gap-2 w-full h-full hover:shadow-[inset_0px_-4px_0px_0px_rgba(227,_227,_227,_0.7)] transition-all duration-300 cursor-pointer text-pink-400'>
+                            <FaHeart className='text-base' />
                             DIA DOS NAMORADOS
                         </button>
                         <button className='flex justify-center items-center gap-2 w-full h-full hover:shadow-[inset_0px_-4px_0px_0px_rgba(227,_227,_227,_0.7)] transition-all duration-300 cursor-pointer'>
-                            <img className='w-6' src={lego}></img>
-                            REGRESSO UNIVERSITÁRIO
+                            <FaHeadset className='text-base' />
+                            SUPPORT
                         </button>
-                        <button className='flex justify-center items-center gap-2 w-full h-full hover:shadow-[inset_0px_-4px_0px_0px_rgba(227,_227,_227,_0.7)] transition-all duration-300 cursor-pointer'>
-                            <img className='w-7' src={fnacRestart}></img>
-                            RETOMAS FNAC
+                        <button className='flex justify-center items-center gap-2 w-full h-full bg-primaryYellowMedium hover:shadow-[inset_0px_-4px_0px_0px_rgba(227,_227,_227,_0.7)] transition-all duration-300 cursor-pointer'>
+                            <FaAddressCard className='text-base' />
+                            FNAQ MEMBERSHIP
                         </button>
-                        <button className='hidden lg:flex justify-center items-center gap-2 w-full h-full hover:shadow-[inset_0px_-4px_0px_0px_rgba(227,_227,_227,_0.7)] transition-all duration-300 cursor-pointer'>
-                            <img className='w-6' src={NTF}></img>
-                            NOVOS TALENTOS FNAC
-                        </button>
+
                     </div>
                 </div>
             </nav>

@@ -5,11 +5,11 @@ import NavBar from '../components/NavBar';
 import SideBar from '../components/SideBar.jsx'
 import HomeProductCard from '../components/Cards/HomeProductCard.jsx';
 
-import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
+import { FaAngleRight, FaAngleLeft, FaRegClock, FaRegAddressCard } from "react-icons/fa6";
 import promoSamsungAI from '../assets/promoSamsungAI.jpeg'
 import promoPowerDeals from '../assets/promoPowerDeals.jpeg'
 import promoFlashSales from '../assets/promoFlashSales.jpeg'
-import techDealsPromo from '../assets/techDealsPromo.jpg'
+import onsale from '../assets/onsale.png'
 
 const HomePage = () => {
 
@@ -86,7 +86,7 @@ const HomePage = () => {
             <SideBar />
             <div className='flex flex-col justify-center w-full'>
                 {/* SlideShow */}
-                <div className={`relative mt-[82px] pt-2 overflow-hidden col-span-2 w-full transition-colors duration-500`} style={{ backgroundColor: slides[currentIndex].color }}>
+                <div className={`relative mt-[65px] pt-4 overflow-hidden col-span-2 w-full transition-colors duration-500`} style={{ backgroundColor: slides[currentIndex].color }}>
                     <div className={`flex w-full h-full transition-transform duration-500 ease-in-out transform `} style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
                         {slides.map((slide, index) => (
                             <div key={index} className="flex justify-center w-full m-auto flex-shrink-0">
@@ -102,29 +102,65 @@ const HomePage = () => {
                         <FaAngleRight />
                     </div>
                 </div>
-                <div className='self-center gap-4 w-11/12 sm:w-11/12 xl:w-10/12 2xl:w-9/12'>
 
-                    <div ref={firstDealRef} className='relative p-3 mt-4 mb-3 '>
 
-                        <div className='relative z-10 flex justify-between items-center w-full mb-3'>
-                            <div className='text-3xl'>TECH DEALS</div>
-                            <button>Saber mais</button>
+
+
+
+                <div className='self-center mt-8 gap-2 w-11/12 sm:w-11/12 xl:w-10/12 2xl:w-9/12'>
+
+                    <div className='hidden md:flex h-20 gap-5 dark:text-white'>
+                        <div className='w-full flex gap-4 items-center'>
+                            <FaRegClock className='min-h-9 min-w-9' />
+                            <div>
+                                <p className='font-bold text-sm lg:text-base'>Order at FNAQ</p>
+                                <p className='text-gray-500 dark:text-white font-light text-sm line-clamp-1'>Pick up for free in-store in 30 min</p>
+                            </div>
                         </div>
+                        <div className='w-full flex gap-4 items-center'>
+                            <FaRegAddressCard className='min-h-9 min-w-9' />
+                            <div>
+                                <p className='font-bold text-sm lg:text-base'>Join the FNAQ Membership</p>
+                                <p className='text-gray-500 dark:text-white font-light text-sm line-clamp-1'>Exclusive benefits for 3 years</p>
+                            </div>
+                        </div>
+                        <div className='w-full flex gap-4 items-center'>
+                            <FaRegClock className='min-h-9 min-w-9' />
+                            <div>
+                                <p className='font-bold text-sm lg:text-base'>Free Shipping for Members</p>
+                                <p className='text-gray-500 dark:text-white font-light text-sm line-clamp-1'>On purchases over €15 | Mainland Portugal except Marketplace</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* On Sale */}
+                    <div ref={firstDealRef} className='hidden sm:block relative mt-5 '>
+                        <div className='flex gap-4'>
+                            <div className='flex flex-col justify-end min-w-[350px] text-white p-3 bg-cover bg-left bg-no-repeat' style={{ backgroundImage: `url(${onsale})` }}>
+                                <div className='text-5xl ml-4 text-left font-semibold'>ON SALE</div>
+                                <button className=' bg-black bg-opacity-50 rounded p-1 m-4'>Ver mais</button>
+                            </div>
+                            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 max-h-[calc(540px)] overflow-y-hidden pt-7">
+                                {products
+                                    .filter(product => product.discount)
+                                    .slice(0, 10)
+                                    .map((product, index) => (
+                                        <HomeProductCard key={index} product={product} index={index}></HomeProductCard>
+                                    ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className='mb-72'></div>
+
+                    {/* <div className='mt-4'>
+                        <div className='text-3xl font-light mb-3'>Dia dos Namorados</div>
                         <div className="grid h-fit grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 ">
                             {products.filter(product => product.discount).map((product, index) => (
                                 <HomeProductCard key={index} product={product} index={index}></HomeProductCard>
                             ))}
                         </div>
-                    </div>
-
-                    <div className=''>
-                        <div className='text-3xl font-light mt-5 mb-3'>Dia dos Namorados</div>
-                        <div className="grid h-fit grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 ">
-                            {products.filter(product => product.discount).map((product, index) => (
-                                <HomeProductCard key={index} product={product} index={index}></HomeProductCard>
-                            ))}
-                        </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 
