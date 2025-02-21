@@ -5,7 +5,6 @@ import CategoryPage from './pages/CategoryPage';
 import ProductPage from './pages/ProductPage';
 import Context from './Context';
 
-
 const App = () => {
   const [theme, setTheme] = useState(false);
   const [sideBar, setSideBar] = useState(false);

@@ -5,11 +5,14 @@ import NavBar from '../components/NavBar';
 import SideBar from '../components/SideBar.jsx'
 import HomeProductCard from '../components/Cards/HomeProductCard.jsx';
 
-import { FaAngleRight, FaAngleLeft, FaRegClock, FaRegAddressCard } from "react-icons/fa6";
-import promoSamsungAI from '../assets/promoSamsungAI.jpeg'
-import promoPowerDeals from '../assets/promoPowerDeals.jpeg'
+import { FaAngleRight, FaAngleLeft, FaRegClock, FaRegAddressCard, FaTruck } from "react-icons/fa6";
+import { BsTruck } from "react-icons/bs";
+import promoSamsungAI from '../assets/promoSamsungAI.jpg'
+import promoPowerDeals from '../assets/promoPowerDeals.jpg'
 import promoFlashSales from '../assets/promoFlashSales.jpeg'
 import onsale from '../assets/onsale.png'
+import valentinesSet from '../assets/valentinesSet.png'
+
 
 const HomePage = () => {
 
@@ -28,30 +31,15 @@ const HomePage = () => {
     }, []);
 
     //SlideShow
-
-    const slides = [
-        {
-            img: promoSamsungAI,
-            color: "#080404",
-        },
-        {
-            img: promoPowerDeals,
-            color: "#e81c2c",
-        },
-        {
-            img: promoFlashSales,
-            color: "#e00c64",
-        }
-    ];
-
+    const slides = [promoSamsungAI, promoPowerDeals, promoFlashSales];
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            nextSlide();
-        }, 5000);
-        return () => clearInterval(interval);
-    }, [currentIndex]);
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         nextSlide();
+    //     }, 8000);
+    //     return () => clearInterval(interval);
+    // }, [currentIndex]);
 
     const nextSlide = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
@@ -64,7 +52,6 @@ const HomePage = () => {
 
     //Deals
     const firstDealRef = useRef(null);
-
     useEffect(() => {
         if (deal) {
             setTimeout(() => {
@@ -86,11 +73,11 @@ const HomePage = () => {
             <SideBar />
             <div className='flex flex-col justify-center w-full'>
                 {/* SlideShow */}
-                <div className={`relative mt-[65px] pt-4 overflow-hidden col-span-2 w-full transition-colors duration-500`} style={{ backgroundColor: slides[currentIndex].color }}>
+                <div className={`relative mt-[65px] pt-4 overflow-hidden col-span-2 w-full transition-colors duration-500`}>
                     <div className={`flex w-full h-full transition-transform duration-500 ease-in-out transform `} style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
                         {slides.map((slide, index) => (
                             <div key={index} className="flex justify-center w-full m-auto flex-shrink-0">
-                                <img src={slide.img} alt="Promo" />
+                                <img src={slide} className='object-cover w-full h-[280px]' alt="Promo" />
                             </div>
                         ))}
                     </div>
@@ -107,17 +94,17 @@ const HomePage = () => {
 
 
 
-                <div className='self-center mt-8 gap-2 w-11/12 sm:w-11/12 xl:w-10/12 2xl:w-9/12'>
+                <div className='self-center mt-6 sm:mt-8 gap-2 w-11/12 sm:w-11/12 xl:w-10/12 2xl:w-9/12'>
 
-                    <div className='hidden md:flex h-20 gap-5 dark:text-white'>
-                        <div className='w-full flex gap-4 items-center'>
+                    <div className='hidden sm:flex sm:h-20 gap-5 dark:text-white'>
+                        <div className='w-full flex gap-4 items-center border-r border-gray-400'>
                             <FaRegClock className='min-h-9 min-w-9' />
                             <div>
                                 <p className='font-bold text-sm lg:text-base'>Order at FNAQ</p>
                                 <p className='text-gray-500 dark:text-white font-light text-sm line-clamp-1'>Pick up for free in-store in 30 min</p>
                             </div>
                         </div>
-                        <div className='w-full flex gap-4 items-center'>
+                        <div className='w-full flex gap-4 items-center border-r border-gray-400'>
                             <FaRegAddressCard className='min-h-9 min-w-9' />
                             <div>
                                 <p className='font-bold text-sm lg:text-base'>Join the FNAQ Membership</p>
@@ -125,7 +112,7 @@ const HomePage = () => {
                             </div>
                         </div>
                         <div className='w-full flex gap-4 items-center'>
-                            <FaRegClock className='min-h-9 min-w-9' />
+                            <BsTruck className='min-h-10 min-w-10' />
                             <div>
                                 <p className='font-bold text-sm lg:text-base'>Free Shipping for Members</p>
                                 <p className='text-gray-500 dark:text-white font-light text-sm line-clamp-1'>On purchases over €15 | Mainland Portugal except Marketplace</p>
@@ -133,12 +120,29 @@ const HomePage = () => {
                         </div>
                     </div>
 
+
+                    {/* FNAQ offers mobile */}
+                    <div className='sm:hidden flex justify-around gap-4 dark:text-white'>
+                        <div className=' flex flex-col gap-1 items-center w-full'>
+                            <FaRegClock className='h-7 w-7' />
+                            <p className='font-semibold text-xs text-center'>Free pick up in-store in 30 min</p>
+                        </div>
+                        <div className='flex flex-col gap-1 items-center w-full'>
+                            <FaRegAddressCard className='h-7 w-7 ' />
+                            <p className='font-semibold text-xs text-center'>Exclusive benefits for 3 years</p>
+                        </div>
+                        <div className='flex flex-col gap-1 items-center w-full'>
+                            <BsTruck className='h-7 w-7' />
+                            <p className='font-semibold text-xs text-center'>Free Shipping for Members</p>
+                        </div>
+                    </div>
+
                     {/* On Sale */}
-                    <div ref={firstDealRef} className='hidden sm:block relative mt-5 '>
+                    <div ref={firstDealRef} className='hidden sm:block relative mt-5'>
                         <div className='flex gap-4'>
                             <div className='flex flex-col justify-end min-w-[350px] text-white p-3 bg-cover bg-left bg-no-repeat' style={{ backgroundImage: `url(${onsale})` }}>
                                 <div className='text-5xl ml-4 text-left font-semibold'>ON SALE</div>
-                                <button className=' bg-black bg-opacity-50 rounded p-1 m-4'>Ver mais</button>
+                                <button className=' bg-black bg-opacity-50 rounded p-1 m-4 transition-transform hover:scale-105'>Ver mais</button>
                             </div>
                             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 max-h-[calc(540px)] overflow-y-hidden pt-7">
                                 {products
@@ -151,16 +155,10 @@ const HomePage = () => {
                         </div>
                     </div>
 
-                    <div className='mb-72'></div>
 
-                    {/* <div className='mt-4'>
-                        <div className='text-3xl font-light mb-3'>Dia dos Namorados</div>
-                        <div className="grid h-fit grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 ">
-                            {products.filter(product => product.discount).map((product, index) => (
-                                <HomeProductCard key={index} product={product} index={index}></HomeProductCard>
-                            ))}
-                        </div>
-                    </div> */}
+                    <div className='h-32 text-white p-3 mt-12 bg-cover bg-center bg-no-repeat' style={{ backgroundImage: `url(${valentinesSet})` }}></div>
+
+                    <div className='mb-72'></div>
                 </div>
             </div>
 
