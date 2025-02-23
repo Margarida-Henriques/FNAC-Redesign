@@ -112,7 +112,7 @@ const NavBar = () => {
             <nav className={`fixed flex justify-center items-center w-full h-fit mt-12 md:mt-12 bg-backgroundDark dark:bg-gradient-to-b dark:from-backgroundDark dark:to-stone-800 z-10 transition-transform duration-300 ${showSecondaryNav ? 'translate-y-0' : '-translate-y-full'} `}>
                 <div className='flex flex-col items-center gap-2 w-11/12 xl:w-10/12 2xl:w-9/12'>
 
-                    {/* MOBILE RESPONSIVE  */}
+                    {/* Moblie Search Input  */}
                     <form action='' className='md:hidden w-full flex items-center py-[5px]'>
                         <FaMagnifyingGlass className='absolute ml-3 z-20 text-black' />
                         <input
@@ -121,7 +121,7 @@ const NavBar = () => {
                             id='search'
                             placeholder='Search...'
                             autoComplete='off'
-                            className='relative z-10 text-base bg-white text-black w-full py-1 pr-1 pl-9 rounded-full focus:outline-none focus:ring-0 border-[1px]' />
+                            className='relative z-10 text-base bg-white text-black w-full py-1 pr-1 pl-9 rounded-full focus:outline-none focus:ring-0' />
                     </form>
 
                     <div className='hidden md:grid lg:grid-cols-5 grid-cols-4 w-full text-xs text-white justify-between'>
