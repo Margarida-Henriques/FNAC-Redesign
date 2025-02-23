@@ -4,6 +4,20 @@ The **FNAC Website Redesign** aims to completely transform and modernize the FNA
   
 <br/>
 
+  
+  
+## ✨ Technologies
+- `React.js`
+- `Context API`
+- `Tailwind CSS`
+- `React Router`<img align='right' top='40px' src='fnaqWebsite' width='90' >
+- `React Icons`
+- `Axios`
+- `Node.js`
+- `Express.js`
+- `MongoDB`
+
+<!--
 ## ✨ Technologies
 - `React.js` - Frontend library for building user interfaces.
 - `Context API` - Lightweight state management for global state.
@@ -14,6 +28,7 @@ The **FNAC Website Redesign** aims to completely transform and modernize the FNA
 - `Node.js` - JavaScript runtime for backend development.
 - `Express.js` - Lightweight framework for creating API endpoints.
 - `MongoDB` - NoSQL database for scalable data storage.
+-->
 
 <br/>
 
