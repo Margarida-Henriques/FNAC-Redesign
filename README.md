@@ -1,4 +1,5 @@
-# FNAC Website Redesign (MERN Stack) 🚧 Work in Progress
+# FNAC Website Redesign
+🚧 Work in Progress
 
 The **FNAC Website Redesign** aims to completely transform and modernize the FNAC website, focusing on improving the design.
   
@@ -6,7 +7,7 @@ The **FNAC Website Redesign** aims to completely transform and modernize the FNA
 
   
   
-## ✨ Technologies
+## ✨ Technologies (MERN Stack)
 - `React.js`
 - `React Router`
 - `Context API`
