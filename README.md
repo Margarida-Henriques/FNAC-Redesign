@@ -1,14 +1,16 @@
-# FNAC Website Redesign
+<div align="center">
+  <h1 align="center">FNAC Website Redesign</h3>
 
+  <p align="center">
+    The **FNAC Website Redesign** aims to completely transform and modernize the FNAC website, focusing on improving the design. 
+  </p>
+  <p>🚧 Work in Progress</p>
+</div>
 
-(🚧 Work in Progress) <br/>
-The **FNAC Website Redesign** aims to completely transform and modernize the FNAC website, focusing on improving the design. 
-  
 <br/>
 
   
-  
-### ✨ Technologies (MERN Stack)
+## Technologies (MERN Stack)
 - `React.js`
 - `React Router`
 - `Context API`
@@ -16,7 +18,7 @@ The **FNAC Website Redesign** aims to completely transform and modernize the FNA
 - `Axios`
 - `Node.js`
 - `Express.js`
-- `MongoDB`
+- `MongoDB`<br/>
 
 <!--
 ### ✨ Technologies
@@ -31,15 +33,13 @@ The **FNAC Website Redesign** aims to completely transform and modernize the FNA
 - `MongoDB` - NoSQL database for scalable data storage.
 -->
 
-<br/>
-
-### 🚀 Features
+## Features 
 - **Modern UI/UX**: Built with `React` and `Tailwind CSS` to deliver a sleek, responsive, and user-friendly interface.
 - **Smart Filtering**: Advanced product filtering system using `Context API` for seamless category, price range and attribute-based searches.
 - **Smooth Navigation**: Intuitive routing system powered by `React Router` for a fluid browsing experience.
 - **Responsive Design**: Fully optimized for all devices - desktop, tablet, and mobile views.
 
-<br/>
+
 
 ## 🎞️ Preview
 
