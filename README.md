@@ -2,7 +2,7 @@
   <h1 align="center">FNAC Website Redesign</h3>
 
   <p align="center">
-    The **FNAC Website Redesign** aims to completely transform and modernize the FNAC website, focusing on improving the design. 
+    The FNAC Website Redesign aims to completely transform and modernize the FNAC website, focusing on improving the design. 
   </p>
   <p>🚧 Work in Progress</p>
 </div>
