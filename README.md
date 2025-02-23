@@ -8,10 +8,9 @@ The **FNAC Website Redesign** aims to completely transform and modernize the FNA
   
 ## ✨ Technologies
 - `React.js`
+- `React Router`
 - `Context API`
 - `Tailwind CSS`
-- `React Router`<img align='right' top='40px' src='fnaqWebsite' width='90' >
-- `React Icons`
 - `Axios`
 - `Node.js`
 - `Express.js`
@@ -37,5 +36,11 @@ The **FNAC Website Redesign** aims to completely transform and modernize the FNA
 - **Smart Filtering**: Advanced product filtering system using `Context API` for seamless category, price range and attribute-based searches.
 - **Smooth Navigation**: Intuitive routing system powered by `React Router` for a fluid browsing experience.
 - **Responsive Design**: Fully optimized for all devices - desktop, tablet, and mobile views.
+
+<br/>
+
+## 🎞️ Preview
+
+<img src='frontend/public/fnaqWebsite.png' width='' >
 
 
