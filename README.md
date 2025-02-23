@@ -1,7 +1,9 @@
 # FNAC Website Redesign (MERN Stack) 🚧 Work in Progress
 
-The **FNAC Website Redesign** aims to completely transform and modernize the FNAC website, focusing on improving the design. This e-commerce web application built with `React` aims to provide a modern, user-friendly, and seamless shopping experience for users. Leveraging the `Context API`, users can easily browse and filter products by category, price range, and other attributes. The smooth navigation and routing are powered by `React Router`, ensuring an intuitive browsing experience across the platform.
+The **FNAC Website Redesign** aims to completely transform and modernize the FNAC website, focusing on improving the design.
+  
 <br/>
+
 ## ✨ Technologies
 - `React.js` - Frontend library for building user interfaces.
 - `Context API` - Lightweight state management for global state.
@@ -12,6 +14,13 @@ The **FNAC Website Redesign** aims to completely transform and modernize the FNA
 - `Node.js` - JavaScript runtime for backend development.
 - `Express.js` - Lightweight framework for creating API endpoints.
 - `MongoDB` - NoSQL database for scalable data storage.
+
 <br/>
+
+## 🚀 Features
+- **Modern UI/UX**: Built with `React` and `Tailwind CSS` to deliver a sleek, responsive, and user-friendly interface.
+- **Smart Filtering**: Advanced product filtering system using `Context API` for seamless category, price range and attribute-based searches.
+- **Smooth Navigation**: Intuitive routing system powered by `React Router` for a fluid browsing experience.
+- **Responsive Design**: Fully optimized for all devices - desktop, tablet, and mobile views.
 
 
