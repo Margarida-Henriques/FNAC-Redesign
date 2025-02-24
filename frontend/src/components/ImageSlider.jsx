@@ -6,22 +6,28 @@ const ImageSlider = ({ slides }) => {
     const touchStartX = useRef(0);
     const touchEndX = useRef(0);
 
+    // Next slide
     const nextSlide = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
     };
 
+    // Previous slide
     const prevSlide = () => {
         setCurrentIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
     };
 
+    // Captures the starting touch position
     const handleTouchStart = (e) => {
         touchStartX.current = e.touches[0].clientX;
     };
 
+    // Updates the touch position
     const handleTouchMove = (e) => {
         touchEndX.current = e.touches[0].clientX;
+        console.log(touchEndX.current)
     };
 
+    // Detects the swipe direction
     const handleTouchEnd = () => {
         const touchDiff = touchStartX.current - touchEndX.current;
         const minSwipeDistance = 50;
@@ -44,6 +50,8 @@ const ImageSlider = ({ slides }) => {
 
     return (
         <div className="relative mt-[65px] overflow-hidden w-full transition-colors duration-500">
+
+            {/* Slide Container */}
             <div
                 className="flex w-full h-full transition-transform duration-500 ease-in-out transform"
                 style={{ transform: `translateX(-${currentIndex * 100}%)` }}

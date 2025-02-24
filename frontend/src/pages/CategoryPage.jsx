@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, useMemo, useCallback } from 'react';
 import axios from 'axios';
-import NavBar from '../components/NavBar';
-import SideBar from '../components/SideBar.jsx';
+import NavBar from '../components/Layout/NavBar.jsx';
+import SideBar from '../components/Layout/SideBar.jsx';
 import Context from '../Context';
 import Slider from '../components/FilterSlider/Slider.jsx';
 import ProductCard from '../components/Cards/ProductCard.jsx';

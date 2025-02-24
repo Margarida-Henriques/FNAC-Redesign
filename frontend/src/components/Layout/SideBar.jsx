@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Context from '../Context';
-import discount from '../assets/discountSidebar.jpeg'
-import logoDark from '../assets/logoDark.png'
+import Context from '../../Context';
+import discount from '../../assets/discountSidebar.jpeg'
+import logoDark from '../../assets/logoDark.png'
 import { FaChevronRight, FaX, FaComputer, FaLaptop, FaComputerMouse, FaChevronLeft } from "react-icons/fa6";
 
 

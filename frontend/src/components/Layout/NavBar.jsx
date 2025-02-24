@@ -1,10 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
-import Context from '../Context';
+import Context from '../../Context';
 import { Link, useNavigate } from 'react-router-dom';
-import fnacRestart from '../assets/fnacRestart.png'
-import NTF from '../assets/NTF.png'
-import logoDark from '../assets/logoDark.png'
-import logo from '../assets/logoY.png'
+import logoDark from '../../assets/logoDark.png'
+import logo from '../../assets/logoY.png'
 import { FaSun, FaMoon, FaBars, FaUser, FaCartShopping, FaMagnifyingGlass, FaBullhorn, FaCertificate, FaAddressCard, FaHeadset, FaHeart } from "react-icons/fa6";
 
 const NavBar = () => {
