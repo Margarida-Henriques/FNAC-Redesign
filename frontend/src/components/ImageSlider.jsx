@@ -71,7 +71,7 @@ const ImageSlider = ({ slides }) => {
                 ))}
             </div>
 
-            {/* Navigation arrows - only visible on desktop */}
+            {/* Arrows - only visible on desktop */}
             <div className="hidden md:block">
                 <div
                     className="absolute left-4 top-1/2 transform -translate-y-1/2 text-2xl rounded-full p-2 bg-black/50 text-white cursor-pointer"

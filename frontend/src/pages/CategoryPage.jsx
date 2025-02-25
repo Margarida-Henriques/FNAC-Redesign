@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext, useMemo, useCallback } from 'react';
 import axios from 'axios';
-import NavBar from '../components/Layout/NavBar.jsx';
-import SideBar from '../components/Layout/SideBar.jsx';
+import NavBar from '../components/layout/NavBar.jsx';
+import SideBar from '../components/layout/SideBar.jsx';
 import Context from '../Context';
-import Slider from '../components/FilterSlider/Slider.jsx';
-import ProductCard from '../components/Cards/ProductCard.jsx';
+import Slider from '../components/filterSlider/Slider.jsx';
+import ProductCard from '../components/cards/ProductCard.jsx';
 
 const CategoryPage = () => {
     const [products, setProducts] = useState([]);

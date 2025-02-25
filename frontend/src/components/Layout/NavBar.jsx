@@ -47,7 +47,7 @@ const NavBar = () => {
     return (
         <div className=''>
             {/* PrimaryNav */}
-            <nav className='fixed w-full pb-1 pt-2 flex justify-center items-center flex-col gap-4 bg-backgroundLight dark:bg-backgroundDark  dark:text-white font-semibold text-lg shadow-lg z-20'>
+            <nav className='fixed w-full pb-1 pt-2 flex justify-center items-center flex-col gap-4 bg-backgroundLight dark:bg-backgroundDark dark:text-white font-semibold text-lg shadow-lg z-20'>
                 <div className='flex justify-between w-11/12 xl:w-10/12 2xl:w-9/12'>
 
                     <div className='flex items-center gap-5'>
@@ -93,10 +93,10 @@ const NavBar = () => {
                         </button>
                         {/*  */}
 
-                        <button className='hover:text-primaryYellow active:text-primaryYellowMedium transition-all cursor-pointer text-2xl'>
-                            <FaUser />
+                        <button className='flex justify-start items-center gap-2 hover:text-primaryYellowMedium active:text-primaryYellowDark transition-all cursor-pointer '>
+                            <FaUser className='text-2xl' />
                         </button>
-                        <button className='hover:text-primaryYellow active:text-primaryYellowMedium transition-all cursor-pointer text-2xl'>
+                        <button className='hover:text-primaryYellowMedium active:text-primaryYellowDark transition-all cursor-pointer text-2xl'>
                             <FaCartShopping />
                         </button>
                     </div>
@@ -107,7 +107,7 @@ const NavBar = () => {
             </nav>
 
             {/* SecondaryNav */}
-            <nav className={`fixed flex justify-center items-center w-full h-fit mt-12 md:mt-12 bg-backgroundDark dark:bg-gradient-to-b dark:from-backgroundDark dark:to-stone-800 z-10 transition-transform duration-300 ${showSecondaryNav ? 'translate-y-0' : '-translate-y-full'} `}>
+            <nav className={`fixed flex justify-center items-center w-full h-fit mt-[45px] md:mt-12 bg-backgroundDark dark:bg-gradient-to-b dark:from-backgroundDark dark:to-stone-800 z-10 transition-transform duration-300 ${showSecondaryNav ? 'translate-y-0' : '-translate-y-full'} `}>
                 <div className='flex flex-col items-center gap-2 w-11/12 xl:w-10/12 2xl:w-9/12'>
 
                     {/* Moblie Search Input  */}
