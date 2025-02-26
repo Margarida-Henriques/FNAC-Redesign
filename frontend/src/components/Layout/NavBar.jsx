@@ -55,7 +55,7 @@ const NavBar = () => {
                             <Link to={"/"}><img src={`${theme ? logoDark : logo}`} alt='fnac_logo' className=' w-20 hover:scale-105 transition-all duration-200 cursor-pointer' /></Link>
                         </div>
                         <button
-                            className='flex flex-row justify-center items-center gap-2 hover:text-primaryYellow active:text-primaryYellowMedium transition-all cursor-pointer'
+                            className='flex flex-row justify-center items-center gap-2 hover:text-primaryYellowMedium active:text-primaryYellowDark transition-all cursor-pointer'
                             onClick={() => setSideBar(!sideBar)}>
                             <FaBars className='text-2xl' />
                             <div className='hidden md:flex'>PRODUCTS</div>
@@ -134,7 +134,7 @@ const NavBar = () => {
                         </button>
                         <button className='hidden lg:flex justify-center items-center gap-2 w-full h-full hover:shadow-[inset_0px_-4px_0px_0px_rgba(227,_227,_227,_0.7)] transition-all duration-300 cursor-pointer text-pink-400'>
                             <FaHeart className='text-base' />
-                            DIA DOS NAMORADOS
+                            VALENTINE'S DAY
                         </button>
                         <button className='flex justify-center items-center gap-2 w-full h-full hover:shadow-[inset_0px_-4px_0px_0px_rgba(227,_227,_227,_0.7)] transition-all duration-300 cursor-pointer'>
                             <FaHeadset className='text-base' />

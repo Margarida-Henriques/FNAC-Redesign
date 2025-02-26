@@ -24,7 +24,6 @@ const ImageSlider = ({ slides }) => {
     // Updates the touch position
     const handleTouchMove = (e) => {
         touchEndX.current = e.touches[0].clientX;
-        console.log(touchEndX.current)
     };
 
     // Detects the swipe direction

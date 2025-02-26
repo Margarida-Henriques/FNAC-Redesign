@@ -4,8 +4,10 @@ import Context from '../Context';
 
 import NavBar from '../components/layout/NavBar.jsx';
 import SideBar from '../components/layout/SideBar.jsx'
-import ImageSlider from '../components/ImageSlider.jsx';
+import ImageSlider from '../components/carousels/ImageSlider.jsx';
 import HomeProductCard from '../components/cards/HomeProductCard.jsx';
+import OneRowCarousel from '../components/carousels/OneRowCarousel.jsx';
+import newsItems from '../data/newsItems.js';
 
 import { FaRegClock, FaRegAddressCard, FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { BsTruck } from "react-icons/bs";
@@ -14,6 +16,7 @@ import promoSamsungAI from '../assets/promoSamsungAI.png'
 import promoPowerDeals from '../assets/promoPowerDeals.jpg'
 import promoFlashSales from '../assets/promoFlashSales.jpeg'
 import valentinesSet from '../assets/valentinesSet.png'
+import ProductCard from '../components/cards/ProductCard.jsx';
 
 
 
@@ -24,40 +27,8 @@ const HomePage = () => {
     const { deal, setDeal } = useContext(Context);
     const slides = [promoSamsungAI, promoPowerDeals, promoFlashSales];
 
-    const [newsXAxis, setNewsXAxis] = useState(100);
-
-    const newsItems = [
-        {
-            category: "NEW",
-            title: "Latest Tech Innovations",
-            description: "Discover the newest gadgets arriving this month at FNAQ stores nationwide."
-        },
-        {
-            category: "EVENT",
-            title: "Spring Tech Showcase",
-            description: "Join us for our annual tech showcase featuring exclusive product launches and demos."
-        },
-        {
-            category: "OFFER",
-            title: "Member Exclusive Deals",
-            description: "FNAQ members can enjoy special discounts on premium electronics this week only."
-        },
-        {
-            category: "GUIDE",
-            title: "Tech Buying Guide 2025",
-            description: "Our experts break down the best tech purchases for every budget and need."
-        },
-        {
-            category: "UPDATE",
-            title: "New Store Opening",
-            description: "FNAQ is expanding with a new flagship store in downtown. Grand opening next month!"
-        },
-        {
-            category: "TECH",
-            title: "AI Revolution in Tech",
-            description: "Explore the role of artificial intelligence in transforming the tech industry and how it's shaping the future."
-        },
-    ];
+    const [newsXAxis, setNewsXAxis] = useState(0);
+    const touchStartX = useRef(0);
 
 
 
@@ -89,6 +60,28 @@ const HomePage = () => {
             }, 200);
         }
     }, [deal]);
+
+
+    const handleTouchStart = (e) => {
+        touchStartX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchMove = (e) => {
+        const currentTouchX = e.touches[0].clientX;
+        const movement = touchStartX.current - currentTouchX; // Difference in movement
+        setNewsXAxis((prev) => {
+            const newPosition = prev + movement;
+            const maxScroll = 326 * (newsItems.length - 1);
+            return Math.max(0, Math.min(newPosition, maxScroll)); // Keep within bounds
+        });
+        touchStartX.current = currentTouchX; // Update for smoother movement
+    };
+
+    const handleTouchEnd = () => {
+        // Snap to nearest item after scrolling
+        const itemWidth = 326;
+        setNewsXAxis((prev) => Math.round(prev / itemWidth) * itemWidth);
+    };
 
 
     return (
@@ -189,7 +182,7 @@ const HomePage = () => {
                                     .filter(product => product.discount)
                                     .slice(0, 10)
                                     .map((product, index) => (
-                                        <HomeProductCard key={index} product={product} index={index}></HomeProductCard>
+                                        <ProductCard key={index} product={product} index={index}></ProductCard>
                                     ))}
                             </div>
                         </div>
@@ -215,39 +208,44 @@ const HomePage = () => {
                         </div>
 
                         {/* News Content */}
-                        <div className='mt-8 text-black'>
-                            <div className='relative flex justify-between overflow-hidden'>
+                        <div className='relative flex justify-between mt-8 text-black overflow-hidden'>
+
+                            <div className='hidden md:block'>
                                 {/* Arrows */}
                                 <FaAngleLeft
                                     className='absolute left-2 top-1/2 -translate-y-1/2 text-3xl rounded-full p-2 bg-black/50 text-white cursor-pointer z-10 hover:bg-black/70 transition-colors'
-                                    onClick={() => setNewsXAxis((prev) => Math.max(prev - 336, 0))}
+                                    onClick={() => setNewsXAxis((prev) => Math.max(prev - 326, 0))}
                                 />
                                 <FaAngleRight
                                     className='absolute right-2 top-1/2 -translate-y-1/2 text-3xl rounded-full p-2 bg-black/50 text-white cursor-pointer z-10 hover:bg-black/70 transition-colors'
-                                    onClick={() => setNewsXAxis((prev) => Math.min(prev + 336, 336 * (newsItems.length - 1)))}
+                                    onClick={() => setNewsXAxis((prev) => Math.min(prev + 326, 326 * (newsItems.length - 1)))}
                                 />
+                            </div>
 
-                                {/* News Items */}
-                                <div
-                                    className='flex gap-4 transition-transform duration-300 ease-in-out'
-                                    style={{ transform: `translateX(-${newsXAxis}px)` }}
-                                >
-                                    {newsItems.map((item, index) => (
-                                        <div
-                                            className='flex flex-col min-w-80 h-72 rounded-tr-xl rounded-bl-xl bg-white overflow-hidden shadow-md'
-                                            key={index}
-                                        >
-                                            <div className='relative flex-grow bg-gray-200'>
-                                                <div className='absolute top-2 left-2 bg-primaryYellowMedium text-white text-xs font-bold px-2 py-1 rounded'>{item.category}</div>
-                                            </div>
-                                            <div className='bg-white h-24 p-4'>
-                                                <h3 className='font-bold text-base mb-1'>{item.title}</h3>
-                                                <p className='text-gray-600 text-sm line-clamp-2'>{item.description}</p>
+                            {/* News Items */}
+                            <div
+                                className='flex gap-4 transition-transform duration-300 ease-in-out'
+                                style={{ transform: `translateX(-${newsXAxis}px)` }}
+                                onTouchStart={handleTouchStart}
+                                onTouchMove={handleTouchMove}
+                                onTouchEnd={handleTouchEnd}
+                            >
+                                {newsItems.map((item, index) => (
+                                    <div key={index} className='flex flex-col min-w-[310px] h-72 rounded-tr-xl rounded-bl-xl bg-white overflow-hidden shadow-md'>
+                                        <div className='relative flex-grow bg-gray-200 overflow-hidden'>
+                                            <img src={item.image} loading="lazy" alt={item.title} className="w-full h-full object-cover" />
+                                            <div className='absolute top-2 left-2 bg-primaryYellowMedium text-white text-xs font-bold px-2 py-1 rounded'>
+                                                {item.category}
                                             </div>
                                         </div>
-                                    ))}
-                                </div>
+                                        <div className='bg-white h-24 p-4'>
+                                            <h3 className='font-bold text-base mb-1'>{item.title}</h3>
+                                            <p className='text-gray-600 text-sm line-clamp-2'>{item.description}</p>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
+
                         </div>
                     </div>
 
