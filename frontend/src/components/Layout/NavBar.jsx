@@ -107,7 +107,8 @@ const NavBar = () => {
             </nav>
 
             {/* SecondaryNav */}
-            <nav className={`fixed flex justify-center items-center w-full h-fit mt-[45px] md:mt-12 bg-backgroundDark dark:bg-gradient-to-b dark:from-backgroundDark dark:to-stone-800 z-10 transition-transform duration-300 ${showSecondaryNav ? 'translate-y-0' : '-translate-y-full'} `}>
+            <nav className={`fixed flex justify-center items-center w-full h-fit mt-[45px] md:mt-12 z-10 bg-backgroundDark shadow-md dark:bg-gradient-to-b dark:from-backgroundDark dark:to-stone-800 
+                transition-transform duration-300 ${showSecondaryNav ? 'translate-y-0' : '-translate-y-full'} `}>
                 <div className='flex flex-col items-center gap-2 w-11/12 xl:w-10/12 2xl:w-9/12'>
 
                     {/* Moblie Search Input  */}

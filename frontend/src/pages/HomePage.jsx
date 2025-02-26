@@ -16,8 +16,6 @@ import promoSamsungAI from '../assets/promoSamsungAI.png'
 import promoPowerDeals from '../assets/promoPowerDeals.jpg'
 import promoFlashSales from '../assets/promoFlashSales.jpeg'
 import valentinesSet from '../assets/valentinesSet.png'
-import ProductCard from '../components/cards/ProductCard.jsx';
-
 
 
 
@@ -26,11 +24,6 @@ const HomePage = () => {
     const [products, setProducts] = useState([]);
     const { deal, setDeal } = useContext(Context);
     const slides = [promoSamsungAI, promoPowerDeals, promoFlashSales];
-
-    const [newsXAxis, setNewsXAxis] = useState(0);
-    const touchStartX = useRef(0);
-
-
 
     // Get products
     useEffect(() => {
@@ -60,28 +53,6 @@ const HomePage = () => {
             }, 200);
         }
     }, [deal]);
-
-
-    const handleTouchStart = (e) => {
-        touchStartX.current = e.touches[0].clientX;
-    };
-
-    const handleTouchMove = (e) => {
-        const currentTouchX = e.touches[0].clientX;
-        const movement = touchStartX.current - currentTouchX; // Difference in movement
-        setNewsXAxis((prev) => {
-            const newPosition = prev + movement;
-            const maxScroll = 326 * (newsItems.length - 1);
-            return Math.max(0, Math.min(newPosition, maxScroll)); // Keep within bounds
-        });
-        touchStartX.current = currentTouchX; // Update for smoother movement
-    };
-
-    const handleTouchEnd = () => {
-        // Snap to nearest item after scrolling
-        const itemWidth = 326;
-        setNewsXAxis((prev) => Math.round(prev / itemWidth) * itemWidth);
-    };
 
 
     return (
@@ -162,7 +133,7 @@ const HomePage = () => {
 
                     {/* Products On Sale Section _________________________________________________________________________________*/}
 
-                    <div ref={firstDealRef} className='hidden sm:block relative mt-10'>
+                    <div ref={firstDealRef} className='block relative mt-10'>
                         <div className='flex flex-col gap-4'>
                             {/* On Sale Banner */}
                             <div className='flex justify-between'>
@@ -177,24 +148,25 @@ const HomePage = () => {
                             </div>
 
                             {/* Discounted Products Content */}
-                            <div className="grid sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 max-h-[calc(520px)] xl:max-h-[calc(540px)] overflow-y-hidden ">
-                                {products
+                            <OneRowCarousel
+                                itemsList={newsItems}
+                                content={products
                                     .filter(product => product.discount)
                                     .slice(0, 10)
                                     .map((product, index) => (
-                                        <ProductCard key={index} product={product} index={index}></ProductCard>
+                                        <HomeProductCard key={index} product={product} index={index}></HomeProductCard>
                                     ))}
-                            </div>
+                            />
                         </div>
                     </div>
 
                     {/* Long Promo Banner _________________________________________________________________________________*/}
 
-                    <div className='h-20 md:h-32 text-white p-3 mt-10 bg-cover bg-center bg-no-repeat transition-transform cursor-pointer' style={{ backgroundImage: `url(${valentinesSet})` }}></div>
+                    <div className='h-20 md:h-24 lg:h-28 text-white p-3 mt-7 sm:mt-10 bg-cover bg-center bg-no-repeat transition-transform cursor-pointer' style={{ backgroundImage: `url(${valentinesSet})` }}></div>
 
                     {/* News Section _________________________________________________________________________________*/}
 
-                    <div className='flex flex-col mt-10 bg-backgroundDark p-3'>
+                    <div className='flex flex-col mt-7 sm:mt-10 bg-backgroundDark p-3'>
                         {/* News Banner */}
                         <div className='flex justify-between text-white'>
                             <div className="text-xl font-semibold relative after:block after:w-2/3 after:h-1 after:bg-primaryYellowMedium after:mt-1 dark:text-white">
@@ -210,28 +182,11 @@ const HomePage = () => {
                         {/* News Content */}
                         <div className='relative flex justify-between mt-8 text-black overflow-hidden'>
 
-                            <div className='hidden md:block'>
-                                {/* Arrows */}
-                                <FaAngleLeft
-                                    className='absolute left-2 top-1/2 -translate-y-1/2 text-3xl rounded-full p-2 bg-black/50 text-white cursor-pointer z-10 hover:bg-black/70 transition-colors'
-                                    onClick={() => setNewsXAxis((prev) => Math.max(prev - 326, 0))}
-                                />
-                                <FaAngleRight
-                                    className='absolute right-2 top-1/2 -translate-y-1/2 text-3xl rounded-full p-2 bg-black/50 text-white cursor-pointer z-10 hover:bg-black/70 transition-colors'
-                                    onClick={() => setNewsXAxis((prev) => Math.min(prev + 326, 326 * (newsItems.length - 1)))}
-                                />
-                            </div>
-
                             {/* News Items */}
-                            <div
-                                className='flex gap-4 transition-transform duration-300 ease-in-out'
-                                style={{ transform: `translateX(-${newsXAxis}px)` }}
-                                onTouchStart={handleTouchStart}
-                                onTouchMove={handleTouchMove}
-                                onTouchEnd={handleTouchEnd}
-                            >
-                                {newsItems.map((item, index) => (
-                                    <div key={index} className='flex flex-col min-w-[310px] h-72 rounded-tr-xl rounded-bl-xl bg-white overflow-hidden shadow-md'>
+                            <OneRowCarousel
+                                itemsList={newsItems}
+                                content={newsItems.map((item, index) => (
+                                    <div key={index} className='flex flex-col min-w-[310px] h-72 rounded-tr-xl rounded-bl-xl bg-white overflow-hidden shadow-md cursor-pointer'>
                                         <div className='relative flex-grow bg-gray-200 overflow-hidden'>
                                             <img src={item.image} loading="lazy" alt={item.title} className="w-full h-full object-cover" />
                                             <div className='absolute top-2 left-2 bg-primaryYellowMedium text-white text-xs font-bold px-2 py-1 rounded'>
@@ -244,7 +199,7 @@ const HomePage = () => {
                                         </div>
                                     </div>
                                 ))}
-                            </div>
+                            />
 
                         </div>
                     </div>
