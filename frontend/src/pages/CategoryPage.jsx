@@ -5,6 +5,7 @@ import SideBar from '../components/layout/SideBar.jsx';
 import Context from '../Context';
 import Slider from '../components/filterSlider/Slider.jsx';
 import ProductCard from '../components/cards/ProductCard.jsx';
+import Footer from '../components/layout/Footer.jsx';
 
 const CategoryPage = () => {
     const [products, setProducts] = useState([]);
@@ -281,6 +282,7 @@ const CategoryPage = () => {
                     </div>
                 </div>
             </div>
+            <Footer></Footer>
         </div>
     );
 };

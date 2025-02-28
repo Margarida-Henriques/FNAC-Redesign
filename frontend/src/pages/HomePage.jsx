@@ -4,18 +4,22 @@ import Context from '../Context';
 
 import NavBar from '../components/layout/NavBar.jsx';
 import SideBar from '../components/layout/SideBar.jsx'
+import Footer from '../components/layout/Footer.jsx';
 import ImageSlider from '../components/carousels/ImageSlider.jsx';
 import HomeProductCard from '../components/cards/HomeProductCard.jsx';
 import OneRowCarousel from '../components/carousels/OneRowCarousel.jsx';
 import newsItems from '../data/newsItems.js';
 
-import { FaRegClock, FaRegAddressCard, FaAngleLeft, FaAngleRight } from "react-icons/fa6";
+import { FaRegClock, FaRegAddressCard, FaSquareYoutube, FaSquareInstagram, FaSquareFacebook, FaSquareXTwitter } from "react-icons/fa6";
 import { BsTruck } from "react-icons/bs";
+
 
 import promoSamsungAI from '../assets/promoSamsungAI.png'
 import promoPowerDeals from '../assets/promoPowerDeals.jpg'
 import promoFlashSales from '../assets/promoFlashSales.jpeg'
 import valentinesSet from '../assets/valentinesSet.png'
+import gridPromoSquare1 from '../assets/gridPromoSquare1.png'
+import gridPromoSquare2 from '../assets/gridPromoSquare2.png'
 
 
 
@@ -64,11 +68,10 @@ const HomePage = () => {
                 {/*Promo Image Slider */}
                 <ImageSlider slides={slides} />
 
-                {/* Main Content - Formating*/}
+                {/* Main Content - Formating */}
                 <div className='self-center mt-10 gap-2 w-11/12 sm:w-11/12 xl:w-10/12 2xl:w-9/12'>
 
-                    {/* FNAQ Offers (Desktop) _________________________________________________________________________________*/}
-
+                    {/* FNAQ Offers (Desktop) */}
                     <div className='hidden md:flex md:h-16 gap-5 dark:text-white'>
 
                         <div className='relative w-full flex gap-4 items-center cursor-pointer group'>
@@ -109,7 +112,7 @@ const HomePage = () => {
                     </div>
 
 
-                    {/* FNAQ Member Offers (Mobile)*/}
+                    {/* FNAQ Member Offers (Mobile) */}
                     <div className='md:hidden flex justify-around gap-4 font-light '>
                         <div className=' flex flex-col gap-1 items-center w-full -rotate-6 py-4 px-2 bg-primaryYellowMedium text-white cursor-pointer'>
                             <FaRegClock className='h-7 w-7' />
@@ -131,8 +134,7 @@ const HomePage = () => {
                         </div>
                     </div>
 
-                    {/* Products On Sale Section _________________________________________________________________________________*/}
-
+                    {/* Products On Sale Section */}
                     <div ref={firstDealRef} className='block relative mt-10'>
                         <div className='flex flex-col gap-4'>
                             {/* On Sale Banner */}
@@ -160,12 +162,10 @@ const HomePage = () => {
                         </div>
                     </div>
 
-                    {/* Long Promo Banner _________________________________________________________________________________*/}
-
+                    {/* Long Promo Banner*/}
                     <div className='h-20 md:h-24 lg:h-28 text-white p-3 mt-7 sm:mt-10 bg-cover bg-center bg-no-repeat transition-transform cursor-pointer' style={{ backgroundImage: `url(${valentinesSet})` }}></div>
 
-                    {/* News Section _________________________________________________________________________________*/}
-
+                    {/* News Section */}
                     <div className='flex flex-col mt-7 sm:mt-10 bg-backgroundDark p-3'>
                         {/* News Banner */}
                         <div className='flex justify-between text-white'>
@@ -203,11 +203,10 @@ const HomePage = () => {
 
                         </div>
                     </div>
-
-
-
-                    <div className='mb-72'></div>
                 </div>
+
+                <Footer />
+
             </div>
 
         </div >
