@@ -43,6 +43,6 @@
 
 ## 🎞️ Preview
 
-
+<img src='frontend/public/fnaqWebsite.png?' width='' >
 
 
