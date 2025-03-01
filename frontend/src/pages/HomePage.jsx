@@ -9,17 +9,15 @@ import ImageSlider from '../components/carousels/ImageSlider.jsx';
 import HomeProductCard from '../components/cards/HomeProductCard.jsx';
 import OneRowCarousel from '../components/carousels/OneRowCarousel.jsx';
 import newsItems from '../data/newsItems.js';
+import DropDownFooter from '../components/dropDown/DropDownFooter.jsx';
 
 import { FaRegClock, FaRegAddressCard, FaSquareYoutube, FaSquareInstagram, FaSquareFacebook, FaSquareXTwitter } from "react-icons/fa6";
 import { BsTruck } from "react-icons/bs";
-
 
 import promoSamsungAI from '../assets/promoSamsungAI.png'
 import promoPowerDeals from '../assets/promoPowerDeals.jpg'
 import promoFlashSales from '../assets/promoFlashSales.jpeg'
 import valentinesSet from '../assets/valentinesSet.png'
-import gridPromoSquare1 from '../assets/gridPromoSquare1.png'
-import gridPromoSquare2 from '../assets/gridPromoSquare2.png'
 
 
 
