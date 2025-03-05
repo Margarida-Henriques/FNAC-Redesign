@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
 import axios from 'axios';
-import Context from '../Context';
+import ShopContext from '../ShopContext.jsx';
 
 import NavBar from '../components/layout/NavBar.jsx';
 import SideBar from '../components/layout/SideBar.jsx'
@@ -9,9 +9,8 @@ import ImageSlider from '../components/carousels/ImageSlider.jsx';
 import HomeProductCard from '../components/cards/HomeProductCard.jsx';
 import OneRowCarousel from '../components/carousels/OneRowCarousel.jsx';
 import newsItems from '../data/newsItems.js';
-import DropDownFooter from '../components/dropDown/DropDownFooter.jsx';
 
-import { FaRegClock, FaRegAddressCard, FaSquareYoutube, FaSquareInstagram, FaSquareFacebook, FaSquareXTwitter } from "react-icons/fa6";
+import { FaRegClock, FaRegAddressCard } from "react-icons/fa6";
 import { BsTruck } from "react-icons/bs";
 
 import promoSamsungAI from '../assets/promoSamsungAI.png'
@@ -24,7 +23,7 @@ import valentinesSet from '../assets/valentinesSet.png'
 const HomePage = () => {
 
     const [products, setProducts] = useState([]);
-    const { deal, setDeal } = useContext(Context);
+    const { deal, setDeal } = useContext(ShopContext);
     const slides = [promoSamsungAI, promoPowerDeals, promoFlashSales];
 
     // Get products

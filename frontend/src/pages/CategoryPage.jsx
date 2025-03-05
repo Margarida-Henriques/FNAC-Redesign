@@ -1,15 +1,17 @@
 import React, { useEffect, useState, useContext, useMemo, useCallback } from 'react';
 import axios from 'axios';
+import ShopContext from '../ShopContext';
+
+
 import NavBar from '../components/layout/NavBar.jsx';
 import SideBar from '../components/layout/SideBar.jsx';
-import Context from '../Context';
 import Slider from '../components/filterSlider/Slider.jsx';
 import ProductCard from '../components/cards/ProductCard.jsx';
 import Footer from '../components/layout/Footer.jsx';
 
 const CategoryPage = () => {
     const [products, setProducts] = useState([]);
-    const { categorySearched } = useContext(Context);
+    const { categorySearched } = useContext(ShopContext);
     const [filters, setFilters] = useState({
         priceRange: { min: 0, max: 2000 },
         brands: [],

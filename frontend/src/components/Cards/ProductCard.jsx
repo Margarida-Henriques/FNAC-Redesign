@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { FaRightLeft, FaHeart } from "react-icons/fa6";
-import Context from "../../Context"
+import ShopContext from "../../ShopContext.jsx"
 
 const ProductCard = ({ product, index }) => {
 
-    const { favorites, setFavorites } = useContext(Context);
+    const { favorites, setFavorites } = useContext(ShopContext);
 
     //CALCULATE DISCOUNT
     const calculateDiscountedPrice = (originalPrice, discountPercentage) => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import Context from '../../Context';
+import ShopContext from '../../ShopContext';
 import { Link, useNavigate } from 'react-router-dom';
 import logoDark from '../../assets/logoDark.png'
 import logo from '../../assets/logoY.png'
@@ -9,9 +9,9 @@ const NavBar = () => {
 
     const navigate = useNavigate();
 
-    const { theme, setTheme } = useContext(Context);
-    const { sideBar, setSideBar } = useContext(Context);
-    const { deal, setDeal } = useContext(Context);
+    const { theme, setTheme } = useContext(ShopContext);
+    const { sideBar, setSideBar } = useContext(ShopContext);
+    const { deal, setDeal } = useContext(ShopContext);
     const [showSecondaryNav, setShowSecondaryNav] = useState(true);
 
     useEffect(() => {
